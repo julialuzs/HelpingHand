@@ -58,13 +58,13 @@ public class RegisterActivity extends AppCompatActivity {
                             );
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Não foi possível pegar os dados. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Um erro ocorreu. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Não foi possível pegar os dados. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
                     }
                 });
 
