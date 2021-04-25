@@ -42,4 +42,11 @@ public class UserService {
         return optional.orElseThrow(() -> new ItemNotFoundException("User"));
     }
 
+    public User findByEmail(String email) {
+
+        Optional<User> optional = repository.findByEmail(email);
+
+        return optional.orElseThrow(() -> new ItemNotFoundException("User"));
+    }
+
 }

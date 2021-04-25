@@ -15,12 +15,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUser;
 
-    // @Email(message = "O e-mail precisa estar em um formato válido!")
     private String email;
 
     private String name;
 
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private boolean isDeaf;
@@ -32,10 +30,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "idLevel")
     private Level level;
-
-//    private ArrayList<QuestionProposal> questionsProposed;
-//
-//    private ArrayList<Log> logs;
 
     public String generateInviteCode() {
         int leftLimit = 48; // numeral '0'
