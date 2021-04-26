@@ -1,10 +1,11 @@
 package com.tcc.helpinghand.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.File;
+
+@Data
 @Entity
 public class Post {
 
@@ -20,5 +21,9 @@ public class Post {
 
     // TODO: create enum???
     private String tag;
+
+    @ManyToOne
+    @JoinColumn(name = "idAuthor")
+    private User author;
 
 }
