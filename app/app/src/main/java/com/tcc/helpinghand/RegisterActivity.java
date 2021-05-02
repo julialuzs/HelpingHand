@@ -40,44 +40,34 @@ public class RegisterActivity extends AppCompatActivity {
 
         this.initializeComponents();
 
-        this.btSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                User user = getUser();
-                Call<User> call = userService.signin(user);
+        this.btSignIn.setOnClickListener(view -> {
+            User user = getUser();
+            Call<User> call = userService.signin(user);
 
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
 
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_LONG).show();
+                    if (response.isSuccessful()) {
+                        showToast("Usuário criado com sucesso!");
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
 
-                            startActivity(
-                                    new Intent(RegisterActivity.this, MainActivity.class)
-                            );
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Um erro ocorreu. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        }
+                    } else {
+                        showToast("Um erro ocorreu. " + response.errorBody().toString());
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
-                    }
-                });
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    showToast("Um erro ocorreu. Tente novamente mais tarde");
+                }
+            });
 
-
-            }
         });
 
-        this.btBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+        this.btBack.setOnClickListener(view -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -103,5 +93,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         RetrofitConfig config = new RetrofitConfig();
         this.userService = config.getUserService();
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(
+                getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG).show();
     }
 }

@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
-    private static final String URL = "http://192.168.1.115:8080/";
+    private static final String URL = "http://192.168.1.107:8080/";
 
     Retrofit retrofit;
 

@@ -41,39 +41,33 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setOnClickListeners() {
 
-        this.tvLinkRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        this.tvLinkRegister.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
-        this.btLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserRequest user = getUserRequest();
-                Call<User> call = userService.login(user);
+        this.btLogin.setOnClickListener(view -> {
+            UserRequest user = getUserRequest();
+            Call<User> call = userService.login(user);
 
-                call.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_LONG).show();
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Um erro ocorreu. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Um erro ocorreu. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
+                }
+            });
         });
 
     }

@@ -17,4 +17,10 @@
     <string name="login_button_label">Logar</string>
     <string name="register_button_label">Cadastrar</string>
     <string name="back_button_label">Voltar</string>
+    <string name="dictionary_menu_label">Dicionário</string>
+    <string name="home_menu_label">Home</string>
+    <string name="feed_menu_label">Feed</string>
+    <string name="person_menu_label">Perfil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+<!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
 </resources>
