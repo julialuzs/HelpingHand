@@ -6,7 +6,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.tcc.helpinghand.models.User;
 import com.tcc.helpinghand.models.requests.UserRequest;
+import com.tcc.helpinghand.models.responses.LoginResponse;
 import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.UserService;
 
@@ -49,13 +52,13 @@ public class LoginActivity extends AppCompatActivity {
 
         this.btLogin.setOnClickListener(view -> {
             UserRequest user = getUserRequest();
-            Call<User> call = userService.login(user);
+            Call<LoginResponse> call = userService.login(user);
 
-            call.enqueue(new Callback<User>() {
+            call.enqueue(new Callback<LoginResponse>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Usuário criado com sucesso!", Toast.LENGTH_LONG).show();
+                        registerToken(response.body().getAccessToken());
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -65,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable t) {
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
                     Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
                 }
             });
@@ -80,6 +83,20 @@ public class LoginActivity extends AppCompatActivity {
         user.setPassword(this.etPassword.getText().toString());
 
         return user;
+    }
+
+    public void registerToken(String token) {
+
+        SharedPreferences sharedPref = getApplicationContext().
+                getSharedPreferences(
+                        getString(R.string.user_token_key),
+                        Context.MODE_PRIVATE
+                );
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.user_token_key), token);
+
+        editor.apply();
     }
 
     private void initializeComponents() {
