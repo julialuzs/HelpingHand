@@ -1,12 +1,10 @@
 package com.tcc.helpinghand.models;
 
+import com.tcc.helpinghand.enums.Difficulty;
+import com.tcc.helpinghand.enums.Status;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.ArrayList;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -18,14 +16,14 @@ public class Lesson {
 
     private long points;
 
-    // TODO: create enum? (Blocked/ In progress/ Concluded)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15, nullable=false)
+    private Status status;
 
-    // TODO: create enum?
-    private String difficulty;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15, nullable=false)
+    private Difficulty difficulty;
 
-    // TODO: create enum?
     private String module;
 
-//    private ArrayList<Question> questions;
 }

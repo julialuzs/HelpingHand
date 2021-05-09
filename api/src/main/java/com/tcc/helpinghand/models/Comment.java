@@ -7,11 +7,11 @@ import java.io.File;
 
 @Data
 @Entity
-public class UserCommentPost {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUserCommentPost;
+    private long idComment;
 
     @ManyToOne
     @JoinColumn(name = "idUser")
@@ -21,6 +21,7 @@ public class UserCommentPost {
     @JoinColumn(name = "idPost")
     private Post post;
 
+    @Column(nullable=false)
     private String content;
 
     private File attachment;

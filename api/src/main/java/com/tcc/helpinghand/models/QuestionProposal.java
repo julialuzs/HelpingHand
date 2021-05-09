@@ -1,7 +1,10 @@
 package com.tcc.helpinghand.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 public class QuestionProposal {
 
@@ -19,7 +22,6 @@ public class QuestionProposal {
 
     private String answer;
 
-    // TODO: create enum?
     private String module;
 
     @ManyToOne

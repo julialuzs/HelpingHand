@@ -9,20 +9,26 @@ import java.util.Random;
 @Entity
 public class User {
 
+    public static final int INVITE_CODE_SIZE = 10;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUser;
 
+    @Column(nullable=false)
     private String email;
 
+    @Column(nullable=false)
     private String name;
 
+    @Column(nullable=false)
     private String password;
 
     private boolean isDeaf;
 
     private long points;
 
+    @Column(length = 10, nullable=false)
     private String inviteCode;
 
     @ManyToOne
@@ -30,14 +36,13 @@ public class User {
     private Level level;
 
     public String generateInviteCode() {
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
+        int leftLimit = 48; // number 0
+        int rightLimit = 122; // letter Z
 
         return new Random()
                 .ints(leftLimit, rightLimit + 1)
                 .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
+                .limit(INVITE_CODE_SIZE)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }

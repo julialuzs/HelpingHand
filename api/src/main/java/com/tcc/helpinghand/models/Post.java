@@ -19,7 +19,6 @@ public class Post {
 
     private File attachment;
 
-    // TODO: create enum???
     private String tag;
 
     @ManyToOne

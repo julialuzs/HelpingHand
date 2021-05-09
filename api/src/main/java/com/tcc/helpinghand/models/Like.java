@@ -6,11 +6,12 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class UserLikePost {
+@Table(name="\"like\"")
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idUserLikePost;
+    private long idLike;
 
     @ManyToOne
     @JoinColumn(name = "idUser")

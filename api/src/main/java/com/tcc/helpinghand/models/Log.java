@@ -1,8 +1,13 @@
 package com.tcc.helpinghand.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class Log {
 
