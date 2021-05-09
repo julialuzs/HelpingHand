@@ -20,6 +20,7 @@ import com.tcc.helpinghand.models.User;
 import com.tcc.helpinghand.models.requests.UserRequest;
 import com.tcc.helpinghand.models.responses.LoginResponse;
 import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
 import com.tcc.helpinghand.services.UserService;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         setContentView(R.layout.activity_login);
 
         this.initializeComponents();
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if (response.isSuccessful()) {
+
                         registerToken(response.body().getAccessToken());
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -86,17 +87,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registerToken(String token) {
-
-        SharedPreferences sharedPref = getApplicationContext().
-                getSharedPreferences(
-                        getString(R.string.user_token_key),
-                        Context.MODE_PRIVATE
-                );
-
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.user_token_key), token);
-
-        editor.apply();
+        TokenService.registerToken(
+                getApplicationContext(),
+                getString(R.string.user_token_key),
+                token
+        );
     }
 
     private void initializeComponents() {

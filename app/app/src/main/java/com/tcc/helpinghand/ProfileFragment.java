@@ -1,30 +1,24 @@
 package com.tcc.helpinghand;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.tcc.helpinghand.models.User;
+import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
+import com.tcc.helpinghand.services.UserService;
 
 import androidx.fragment.app.Fragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.tcc.helpinghand.models.User;
-import com.tcc.helpinghand.models.responses.LoginResponse;
-import com.tcc.helpinghand.services.RetrofitConfig;
-import com.tcc.helpinghand.services.UserService;
-
 public class ProfileFragment extends Fragment {
 
     public UserService userService;
-
-    private TextView tvUserName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +26,9 @@ public class ProfileFragment extends Fragment {
 
         this.initializeComponents();
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.user_token_key), Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(getString(R.string.user_token_key), null);
+        String token = TokenService.getToken(
+                getActivity(), getString(R.string.user_token_key)
+        );
 
         Call<User> call = userService.getCurrentUser(token);
 
@@ -43,7 +38,7 @@ public class ProfileFragment extends Fragment {
                 if (response.isSuccessful()) {
                     User user = response.body();
 
-                    Toast.makeText(getContext(),user.getEmail() + ',' + user.getName(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), user.getEmail() + ',' + user.getName(), Toast.LENGTH_LONG).show();
                 }
             }
 

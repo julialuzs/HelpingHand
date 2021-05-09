@@ -1,14 +1,7 @@
 package com.tcc.helpinghand;
 
-import androidx.appcompat.app.AppCompatActivity;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,20 +11,21 @@ import com.tcc.helpinghand.models.User;
 import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.UserService;
 
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    public UserService userService;
     private EditText etName;
     private EditText etEmail;
     private EditText etPassword;
     private EditText etConfirmPassword;
     private CheckBox cbDeaf;
-
     private Button btSignIn;
     private Button btBack;
-
-    public UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
