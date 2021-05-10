@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserRepository repository;
 
@@ -36,14 +37,12 @@ public class UserService {
     }
 
     public User findById(long id) {
-
         Optional<User> optional = repository.findById(id);
 
         return optional.orElseThrow(() -> new ItemNotFoundException("User"));
     }
 
     public User findByEmail(String email) {
-
         Optional<User> optional = repository.findByEmail(email);
 
         return optional.orElseThrow(() -> new ItemNotFoundException("User"));
