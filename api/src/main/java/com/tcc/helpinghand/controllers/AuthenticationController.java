@@ -33,8 +33,6 @@ public class AuthenticationController {
 
         String token = authenticationService.authenticate(email , password);
 
-        //TODO: register log
-
         User user = userService.findByEmail(email);
         logService.registerLog(user);
 
