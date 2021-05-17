@@ -1,0 +1,5 @@
+interface ChangeState {
+
+	bool getChangeState();
+
+}
