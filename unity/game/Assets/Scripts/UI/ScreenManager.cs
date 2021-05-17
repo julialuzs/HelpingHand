@@ -62,8 +62,11 @@ public class ScreenManager : MonoBehaviour {
     public Button avaliationButton;
     public Button repeatButton;
     
+
     private bool onLockExport = false;
     private bool onLockShare = false;
+  
+    
 
 	public GameObject textButton;
 	public GameObject pauseButton;
@@ -87,7 +90,8 @@ public class ScreenManager : MonoBehaviour {
     private void Start()
     {
         closeRegionPanel(true);
-        // showTutorialOnInit();
+        showTutorialOnInit();
+
     }
 
     private void showTutorialOnInit()
@@ -100,7 +104,6 @@ public class ScreenManager : MonoBehaviour {
             PlayerPrefs.SetInt("init", 1);
         }
     }
-
     public void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape)) 
@@ -167,6 +170,8 @@ public class ScreenManager : MonoBehaviour {
     {
         this.changeAvatarButton.SetActive(active);
     }
+
+
 
     public bool hasActiveScreen()
 	{
@@ -462,8 +467,11 @@ public class ScreenManager : MonoBehaviour {
 
     public void setShareLayerState(bool active)
     {
+
         this.shareLayer.SetActive(active);
     }
+
+   
 
     public void setTranslateButtonActive(bool active)
 	{
