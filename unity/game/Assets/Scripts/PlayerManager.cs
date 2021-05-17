@@ -66,10 +66,6 @@ public class PlayerManager : GenericPlayerManager {
 		this.voiceRecognizer = new VoiceRecognition();
 
 		Screen.fullScreen = false;
-
-		// AQUI Ó - JULIA
-		//StartCoroutine("translate", "Bom dia");
-	
 	}
 
 	private void setSigns() {
@@ -244,7 +240,7 @@ public class PlayerManager : GenericPlayerManager {
         glossRequest.timeout = Config.TIMEOUT;
 
         PlayerLogger.Log("PM", "t", "Gloss: " + gloss);
-				PlayerLogger.Log("PM", "t", "Request: " + SERVER_URL);
+		PlayerLogger.Log("PM", "t", "Request: " + SERVER_URL);
 
         //yield return WaitForResponse(glossRequest);
         yield return glossRequest.SendWebRequest();
