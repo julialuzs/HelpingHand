@@ -25,9 +25,7 @@ public class AvaliationButtons : MonoBehaviour
         else
         {
             StartCoroutine(SendReview(parms));
-
         }
-
 
     }
 
