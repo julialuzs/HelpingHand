@@ -1,2 +1,3 @@
+include ':vlibras-app'
 include ':app'
 rootProject.name = "HelpingHand"

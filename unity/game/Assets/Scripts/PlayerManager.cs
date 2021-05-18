@@ -66,13 +66,14 @@ public class PlayerManager : GenericPlayerManager {
 		this.voiceRecognizer = new VoiceRecognition();
 
 		Screen.fullScreen = false;
+
+		// StartCoroutine("translate", "Tudo bem?");
+		// this.screenManager.DisableSubtitles();
 	}
 
 	private void setSigns() {
 		this.signs = this.gameObject.GetComponent<Dictionary>().Signs;
 	}
-
-    
 
 	public void playDict(string word)
 	{

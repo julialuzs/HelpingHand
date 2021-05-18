@@ -90,8 +90,26 @@ public class ScreenManager : MonoBehaviour {
     private void Start()
     {
         closeRegionPanel(true);
-        showTutorialOnInit();
+        // hideAvaliationLayers();
 
+        dictButton.gameObject.SetActive(false);
+        writeButton.gameObject.SetActive(false);
+        subtitleButton.gameObject.SetActive(false);
+        menuButton.gameObject.SetActive(false);
+        microButton.gameObject.SetActive(false);
+        exportButton.gameObject.SetActive(false);
+        // avaliationButton.gameObject.SetActive(false);
+
+        // textButton.SetActive(false);
+
+        // avaliationLayer.SetActive(false);
+        // exportContainer.SetActive(false);
+        // exportLayer.SetActive(false);
+        // shareLayer.SetActive(false);
+    }
+
+    public void DisableSubtitles() {
+        subtitleButton.onClick.Invoke();
     }
 
     private void showTutorialOnInit()
@@ -393,15 +411,15 @@ public class ScreenManager : MonoBehaviour {
 
     public void setButtonsState(bool enable)
     {
-        this.infoMessageButton.enabled = enable;
-        this.writeButton.enabled = enable;
+        // this.infoMessageButton.enabled = enable;
+        // this.writeButton.enabled = enable;
         this.pause_Button.enabled = enable;
-        this.microButton.enabled = enable;
-        this.subtitleButton.enabled = enable;
-        this.menuButton.enabled = enable;
-        this.dictButton.enabled = enable;
-        this.exportButton.enabled = enable;
-        this.avaliationButton.enabled = enable;
+        // this.microButton.enabled = enable;
+        // this.subtitleButton.enabled = enable;
+        // this.menuButton.enabled = enable;
+        // this.dictButton.enabled = enable;
+        // this.exportButton.enabled = enable;
+        // this.avaliationButton.enabled = enable;
         this.repeatButton.enabled = enable;
         this.changeAvatarButton.GetComponent<Button>().enabled = enable;
 
