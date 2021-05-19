@@ -5,5 +5,4 @@ import lombok.Data;
 public class LoginResponse {
 
     private final String accessToken;
-
 }

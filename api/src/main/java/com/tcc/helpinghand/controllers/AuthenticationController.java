@@ -31,9 +31,11 @@ public class AuthenticationController {
         String email = request.getEmail();
         String password = request.getPassword();
 
+        User user = userService.findByEmail(email);
+
         String token = authenticationService.authenticate(email , password);
 
-        User user = userService.findByEmail(email);
+
         logService.registerLog(user);
 
         return new LoginResponse(token);

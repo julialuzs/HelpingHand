@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.tcc.helpinghand.models.User;
 import com.tcc.helpinghand.models.requests.UserRequest;
 import com.tcc.helpinghand.models.responses.LoginResponse;
@@ -23,15 +28,21 @@ import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.TokenService;
 import com.tcc.helpinghand.services.UserService;
 
-public class LoginActivity extends AppCompatActivity {
+import java.util.List;
+
+public class LoginActivity extends AppCompatActivity  implements Validator.ValidationListener {
 
     private Button btLogin;
-    private EditText etPassword;
+    private TextView tvLinkRegister;
+    private Validator validator;
+    public UserService userService;
+
+    @NotEmpty(message = "O email precisa ser preenchido")
+    @Email(message = "E-mail inválido")
     private EditText etEmail;
 
-    private TextView tvLinkRegister;
-
-    public UserService userService;
+    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC, message="A senha deve ter no mínimo 6 caracteres alfabéticos e numéricos")
+    private EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_login);
 
+        validator = new Validator(this);
+        validator.setValidationListener(this);
         this.initializeComponents();
         this.setOnClickListeners();
     }
@@ -51,28 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         this.btLogin.setOnClickListener(view -> {
-            UserRequest user = getUserRequest();
-            Call<LoginResponse> call = userService.login(user);
-
-            call.enqueue(new Callback<LoginResponse>() {
-                @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if (response.isSuccessful()) {
-
-                        registerToken(response.body().getAccessToken());
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Um erro ocorreu. " + response.errorBody().toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
-                }
-            });
+            validator.validate();
         });
 
     }
@@ -102,5 +94,44 @@ public class LoginActivity extends AppCompatActivity {
 
         RetrofitConfig config = new RetrofitConfig();
         this.userService = config.getUserService();
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        UserRequest user = getUserRequest();
+        Call<LoginResponse> call = userService.login(user);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful()) {
+
+                    registerToken(response.body().getAccessToken());
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Erro na autenticação. " + response.message(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Um erro ocorreu. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for(ValidationError e:errors) {
+            View view = e.getView();
+            String message = e.getCollatedErrorMessage(this);
+
+            if(view instanceof EditText){
+                ((EditText) view).setError(message);
+            }
+        }
+
     }
 }
