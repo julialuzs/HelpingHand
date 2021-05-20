@@ -4,7 +4,227 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:flexDirection="column"
+            app:flexWrap="wrap"
+            android:paddingBottom="100dp"
+            >
+
+            <TextView
+                android:id="@+id/tvBasic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:text="LIÇÕES BÁSICAS"
+                android:textColor="#050000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_alignSelf="center" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:alignContent="center"
+                app:alignItems="center"
+                app:flexDirection="row"
+                app:justifyContent="space_evenly"
+                app:flexWrap="wrap"
+                >
+
+                <ImageButton
+                    android:id="@+id/btnBasicM1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/audiobook_1" />
+
+                <ImageButton
+                    android:id="@+id/btnBasicM2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/lesson_1" />
+
+                <ImageButton
+                    android:id="@+id/btnBasicM3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/rocket_1" />
+
+
+                <ImageButton
+                    android:id="@+id/btnBasicM4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/testing" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+
+            <TextView
+                android:id="@+id/tvIntermediary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="15dp"
+                android:text="LIÇÕES INTERMEDIÁRIAS"
+                android:textColor="#050000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_alignSelf="center" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:alignContent="center"
+                app:alignItems="center"
+                app:flexDirection="row"
+                app:justifyContent="space_evenly"
+                app:flexWrap="wrap"
+                >
+
+                <ImageButton
+                    android:id="@+id/btnIntermediaryM1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/apple" />
+
+                <ImageButton
+                    android:id="@+id/btnIntermediaryM2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/calendar" />
+
+                <ImageButton
+                    android:id="@+id/btnIntermediaryM3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/globe" />
+
+
+                <ImageButton
+                    android:id="@+id/btnIntermediaryM4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/books" />
+        </com.google.android.flexbox.FlexboxLayout>
+
+
+            <TextView
+                android:id="@+id/tvAdvanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="15dp"
+                android:text="LIÇÕES AVANÇADAS"
+                android:textColor="#050000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_alignSelf="center" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:alignContent="center"
+                app:alignItems="center"
+                app:flexDirection="row"
+                app:justifyContent="space_evenly"
+                app:flexWrap="wrap"
+                >
+
+                <ImageButton
+                    android:id="@+id/btnAdvancedM1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/notes" />
+
+                <ImageButton
+                    android:id="@+id/btnAdvancedM2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/apps" />
+
+                <ImageButton
+                    android:id="@+id/btnAdvancedM3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingStart="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/radio_button" />
+
+
+                <ImageButton
+                    android:id="@+id/btnAdvancedM4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/roundbtn"
+                    android:paddingEnd="30dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/award" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+
+
+        </com.google.android.flexbox.FlexboxLayout>
+    </ScrollView>
 
     <FrameLayout
         android:id="@+id/fl_fragment_container"
