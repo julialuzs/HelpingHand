@@ -18,7 +18,11 @@ public class Question {
     @Column(nullable=false)
     private String description;
 
-    private String answer;
+    @Column(nullable=false)
+    private String correctAnswer;
+
+    @Column(nullable=false)
+    private String answerOptions;
 
     @ManyToOne
     @JoinColumn(name = "idLesson")

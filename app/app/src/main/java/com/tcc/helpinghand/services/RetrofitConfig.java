@@ -18,4 +18,8 @@ public class RetrofitConfig {
     public UserService getUserService() {
         return this.retrofit.create(UserService.class);
     }
+
+    public LessonService getLessonService() {
+        return this.retrofit.create(LessonService.class);
+    }
 }

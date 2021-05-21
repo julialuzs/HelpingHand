@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case R.id.nav_item_dictionary:
                     fragment = new DictionaryFragment();
+//                    fragment = new UnityPlayerFragment();
                     break;
                 case R.id.nav_item_feed:
                     fragment = new FeedFragment();

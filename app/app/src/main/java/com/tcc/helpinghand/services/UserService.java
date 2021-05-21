@@ -17,7 +17,7 @@ public interface UserService {
     @GET("user")
     Call<User> getCurrentUser(@Header("Authorization") String token);
 
-    @POST("public/authentication/login")
+    @POST("public/login")
     Call<LoginResponse> login(@Body UserRequest product);
 
     @POST("public/user")
