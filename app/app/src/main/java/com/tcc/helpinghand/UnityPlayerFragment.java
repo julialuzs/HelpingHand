@@ -16,16 +16,22 @@ public class UnityPlayerFragment extends Fragment {
     protected UnityPlayer mUnityPlayer;
     FrameLayout frameLayoutForUnity;
 
+    public String sign;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         mUnityPlayer = new UnityPlayer(getActivity());
+        sign = getArguments().getString("sign");
         View view = inflater.inflate(R.layout.fragment_unity_player, container, false);
 
         this.frameLayoutForUnity = view.findViewById(R.id.fl_unity_layout);
-        this.frameLayoutForUnity.addView(mUnityPlayer.getView(),
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        this.frameLayoutForUnity.addView(
+                mUnityPlayer.getView(),
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        );
 
         mUnityPlayer.requestFocus();
         mUnityPlayer.windowFocusChanged(true);
@@ -49,7 +55,7 @@ public class UnityPlayerFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
-        UnityPlayer.UnitySendMessage("PlayerManager", "translate", "Bom dia, Julia");
+        UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
         UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
     }
 }
