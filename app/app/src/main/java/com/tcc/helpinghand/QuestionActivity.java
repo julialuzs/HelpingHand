@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.tcc.helpinghand.models.Question;
-import com.tcc.helpinghand.services.QuestionService;
+import com.tcc.helpinghand.services.LessonService;
 import com.tcc.helpinghand.services.RetrofitConfig;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class QuestionActivity extends AppCompatActivity {
     private ChipGroup cgOptions;
     private TextView tvDescription;
 
-    public QuestionService questionService;
+    public LessonService lessonService;
 
     public List<Question> questions;
 
@@ -36,7 +36,7 @@ public class QuestionActivity extends AppCompatActivity {
         initializeComponents();
 
         // TODO: change this parameter to use lesson id sent by Intent instead
-        Call<List<Question>> call = this.questionService.getQuestionsByLesson(1);
+        Call<List<Question>> call = this.lessonService.getQuestionsByLesson(1);
 
         call.enqueue(new Callback<List<Question>>() {
             @Override
@@ -100,6 +100,6 @@ public class QuestionActivity extends AppCompatActivity {
         this.tvDescription = findViewById(R.id.tv_question_description);
         this.cgOptions = findViewById(R.id.cg_options);
         RetrofitConfig config = new RetrofitConfig();
-        this.questionService = config.getQuestionService();
+        this.lessonService = config.getLessonService();
     }
 }

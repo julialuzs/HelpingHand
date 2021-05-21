@@ -19,7 +19,7 @@ public class RetrofitConfig {
         return this.retrofit.create(UserService.class);
     }
 
-    public QuestionService getQuestionService() {
-        return this.retrofit.create(QuestionService.class);
+    public LessonService getLessonService() {
+        return this.retrofit.create(LessonService.class);
     }
 }

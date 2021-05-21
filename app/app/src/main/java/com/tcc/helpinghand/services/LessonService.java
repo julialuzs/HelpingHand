@@ -7,7 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface QuestionService {
+public interface LessonService {
 
     @GET("lesson/{lessonId}/questions")
     Call<List<Question>> getQuestionsByLesson(@Path("lessonId") int lessonId);
