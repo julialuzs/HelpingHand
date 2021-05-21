@@ -3,6 +3,7 @@ package com.tcc.helpinghand.services;
 import com.tcc.helpinghand.exceptions.ItemNotFoundException;
 import com.tcc.helpinghand.models.Level;
 import com.tcc.helpinghand.models.User;
+import com.tcc.helpinghand.repositories.LevelRepository;
 import com.tcc.helpinghand.repositories.UserRepository;
 import com.tcc.helpinghand.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LevelRepository levelRepository;
 
     public User signIn(User usuario) {
 
@@ -46,6 +50,23 @@ public class UserService {
         Optional<User> optional = repository.findByEmail(email);
 
         return optional.orElseThrow(() -> new ItemNotFoundException("User"));
+    }
+
+    public long receivePoints(User user, long points) {
+        long currentPoints = user.getPoints();
+        user.setPoints(currentPoints + points);
+
+        Level level = levelRepository.findByAmountOfPoints(user.getPoints());
+
+        boolean userHasLeveledUp = level.getIdLevel() != user.getLevel().getIdLevel();
+
+        if (userHasLeveledUp) {
+            user.setLevel(level);
+        }
+
+        repository.save(user);
+
+        return user.getPoints();
     }
 
 }

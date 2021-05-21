@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//TODO: merge this controller with PublicUserController
 @RequestMapping("/public/authentication")
 @RestController
 public class AuthenticationController {
@@ -34,7 +35,6 @@ public class AuthenticationController {
         User user = userService.findByEmail(email);
 
         String token = authenticationService.authenticate(email , password);
-
 
         logService.registerLog(user);
 

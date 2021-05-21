@@ -1,10 +1,11 @@
 package com.tcc.helpinghand.models;
 
+import com.tcc.helpinghand.converters.DifficultyConverter;
 import com.tcc.helpinghand.enums.Difficulty;
-import com.tcc.helpinghand.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,14 +17,13 @@ public class Lesson {
 
     private long points;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @Column(length = 15, nullable=false)
-    private Status status;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 15, nullable=false)
+    @Convert(converter = DifficultyConverter.class)
     private Difficulty difficulty;
 
     private String module;
+
+
 
 }

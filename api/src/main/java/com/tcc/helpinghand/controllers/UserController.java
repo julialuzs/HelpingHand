@@ -23,8 +23,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public User getCurrentUser(@AuthenticationPrincipal CurrentUser userPrincipal) {
-        return userPrincipal.getUser();
+    public User getCurrentUser(@AuthenticationPrincipal CurrentUser currentUser) {
+        return currentUser.getUser();
     }
 
 }

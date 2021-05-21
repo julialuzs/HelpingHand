@@ -8,6 +8,12 @@ import javax.persistence.*;
 @Entity
 public class UserQuestion {
 
+    public UserQuestion(User user, Question question, String answer) {
+        this.question = question;
+        this.user = user;
+        this.answer = answer;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUserQuestion;
@@ -19,4 +25,10 @@ public class UserQuestion {
     @ManyToOne
     @JoinColumn(name = "idQuestion")
     private Question question;
+
+    @Column(nullable = false)
+    private String answer;
+
+    @Column(nullable = false)
+    private boolean isCorrect;
 }
