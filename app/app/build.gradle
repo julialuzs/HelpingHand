@@ -38,6 +38,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'com.github.medyo:fancybuttons:1.9.1'
     testImplementation 'junit:junit:4.+'
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
