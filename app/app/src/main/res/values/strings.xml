@@ -21,4 +21,6 @@
     <string name="feed_menu_label">Feed</string>
     <string name="person_menu_label">Perfil</string>
     <string name="hello">Olá</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

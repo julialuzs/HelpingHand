@@ -1,7 +1,9 @@
 package com.tcc.helpinghand.models;
 
 import com.tcc.helpinghand.converters.DifficultyConverter;
+import com.tcc.helpinghand.converters.StatusConverter;
 import com.tcc.helpinghand.enums.Difficulty;
+import com.tcc.helpinghand.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +26,11 @@ public class Lesson {
 
     private String module;
 
+//    @Enumerated(EnumType.STRING)
+    @Column(length = 15, nullable=false)
+    @Convert(converter = StatusConverter.class)
+    private Status status;
 
+    private int imageId;
 
 }

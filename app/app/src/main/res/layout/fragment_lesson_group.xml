@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:flexDirection="column"
+    app:flexWrap="wrap"
+    app:alignItems="center"
+    tools:context=".LessonGroupFragment">
+
+    <TextView
+        android:id="@+id/tv_difficulty"
+        android:text="LIÇÕES"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="#050000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_alignSelf="center" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/fl_lesson_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:alignContent="center"
+        app:alignItems="center"
+        app:flexDirection="row"
+        app:justifyContent="space_evenly"
+        app:flexWrap="wrap">
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</com.google.android.flexbox.FlexboxLayout>

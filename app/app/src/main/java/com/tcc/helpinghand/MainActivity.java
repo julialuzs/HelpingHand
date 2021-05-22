@@ -12,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.models.Question;
 import com.tcc.helpinghand.services.LessonService;
+import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,20 +57,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         this.initializeComponents();
+
         this.checkLessonsStatus();
 
-        btnBasicM1.setOnClickListener(this);
-        btnBasicM2.setOnClickListener(this);
-        btnBasicM3.setOnClickListener(this);
-        btnBasicM4.setOnClickListener(this);
-        btnIntermediaryM1.setOnClickListener(this);
-        btnIntermediaryM2.setOnClickListener(this);
-        btnIntermediaryM3.setOnClickListener(this);
-        btnIntermediaryM4.setOnClickListener(this);
-        btnAdvancedM1.setOnClickListener(this);
-        btnAdvancedM2.setOnClickListener(this);
-        btnAdvancedM3.setOnClickListener(this);
-        btnAdvancedM4.setOnClickListener(this);
+//        btnBasicM1.setOnClickListener(this);
+//        btnBasicM2.setOnClickListener(this);
+//        btnBasicM3.setOnClickListener(this);
+//        btnBasicM4.setOnClickListener(this);
+//        btnIntermediaryM1.setOnClickListener(this);
+//        btnIntermediaryM2.setOnClickListener(this);
+//        btnIntermediaryM3.setOnClickListener(this);
+//        btnIntermediaryM4.setOnClickListener(this);
+//        btnAdvancedM1.setOnClickListener(this);
+//        btnAdvancedM2.setOnClickListener(this);
+//        btnAdvancedM3.setOnClickListener(this);
+//        btnAdvancedM4.setOnClickListener(this);
 
 
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
@@ -79,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case R.id.nav_item_dictionary:
                     fragment = new DictionaryFragment();
-//                    fragment = new UnityPlayerFragment();
                     break;
                 case R.id.nav_item_feed:
                     fragment = new FeedFragment();
@@ -101,40 +105,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toast.makeText(MainActivity.this, "Teste do click", Toast.LENGTH_SHORT).show();
 
-        switch (view.getId()) {
-            case R.id.btnBasicM1:
-                btnBasicM1.setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.locked), android.graphics.PorterDuff.Mode.MULTIPLY);
-                break;
-        }
-
-        switch ((view.getId())){
-            case R.id.btnBasicM2:
-                btnBasicM1.setColorFilter(null);
-                break;
-        }
-
-        switch ((view.getId())){
-            case R.id.btnBasicM3:
-                imgLock1.setVisibility(View.INVISIBLE);
-                break;
-        }
-
-        switch ((view.getId())){
-            case R.id.btnBasicM4:
-                imgLock1.setVisibility(View.VISIBLE);
-                break;
-        }
+//        switch (view.getId()) {
+//            case R.id.btnBasicM1:
+//                btnBasicM1.setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.locked), android.graphics.PorterDuff.Mode.MULTIPLY);
+//                break;
+//        }
+//
+//        switch ((view.getId())){
+//            case R.id.btnBasicM2:
+//                btnBasicM1.setColorFilter(null);
+//                break;
+//        }
+//
+//        switch ((view.getId())){
+//            case R.id.btnBasicM3:
+//                imgLock1.setVisibility(View.INVISIBLE);
+//                break;
+//        }
+//
+//        switch ((view.getId())){
+//            case R.id.btnBasicM4:
+//                imgLock1.setVisibility(View.VISIBLE);
+//                break;
+//        }
     }
 
     private void checkLessonsStatus() {
-        this.lessonService.getAll().enqueue(new Callback<List<Lesson>>() {
+        String token = TokenService.getToken(MainActivity.this, getString(R.string.user_token_key));
 
+        this.lessonService.getAllByCurrentUser(token).enqueue(new Callback<List<Lesson>>() {
             @Override
             public void onResponse(Call<List<Lesson>> call, Response<List<Lesson>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     lessons = response.body();
-                }else{
-///aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+                    List<Lesson> basicLessons = lessons.stream()
+                            .filter(lesson -> lesson.getDifficulty() == Difficulty.BASIC)
+                            .collect(Collectors.toList());
+
+                    List<Lesson> intermediateLessons = lessons.stream()
+                            .filter(lesson -> lesson.getDifficulty() == Difficulty.INTERMEDIATE)
+                            .collect(Collectors.toList());
+
+                    List<Lesson> advancedLessons = lessons.stream()
+                            .filter(lesson -> lesson.getDifficulty() == Difficulty.ADVANCED)
+                            .collect(Collectors.toList());
+
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                    Fragment fragmentBasic = LessonGroupFragment.newInstance(basicLessons);
+                    transaction.add(R.id.fl_lesson_group, fragmentBasic);
+
+                    Fragment fragmentIntermediate = LessonGroupFragment.newInstance(intermediateLessons);
+                    transaction.add(R.id.fl_lesson_group, fragmentIntermediate);
+
+                    Fragment fragmentAdvanced = LessonGroupFragment.newInstance(advancedLessons);
+                    transaction.add(R.id.fl_lesson_group, fragmentAdvanced);
+
+                    transaction.commit();
+
+                } else {
+                    Toast.makeText(MainActivity.this, ":(((", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -147,21 +178,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initializeComponents() {
         this.bottomNavigation = (BottomNavigationView) findViewById(R.id.bnv_nav_bar);
-        imgLock1 = findViewById(R.id.imgLock1);
-        imgLock2 = findViewById(R.id.imgLock2);
-        btnBasicM1 = findViewById(R.id.btnBasicM1);
-        btnBasicM2 = findViewById(R.id.btnBasicM2);
-        btnBasicM3 = findViewById(R.id.btnBasicM3);
-        btnBasicM4 = findViewById(R.id.btnBasicM4);
-        btnIntermediaryM1 = findViewById(R.id.btnIntermediaryM1);
-        btnIntermediaryM2 = findViewById(R.id.btnIntermediaryM2);
-        btnIntermediaryM3 = findViewById(R.id.btnIntermediaryM3);
-        btnIntermediaryM4 = findViewById(R.id.btnIntermediaryM4);
-        btnAdvancedM1 = findViewById(R.id.btnAdvancedM1);
-        btnAdvancedM2 = findViewById(R.id.btnAdvancedM2);
-        btnAdvancedM3 = findViewById(R.id.btnAdvancedM3);
-        btnAdvancedM4 = findViewById(R.id.btnAdvancedM4);
+//        imgLock1 = findViewById(R.id.imgLock1);
+//        imgLock2 = findViewById(R.id.imgLock2);
+//        btnBasicM1 = findViewById(R.id.btnBasicM1);
+//        btnBasicM2 = findViewById(R.id.btnBasicM2);
+//        btnBasicM3 = findViewById(R.id.btnBasicM3);
+//        btnBasicM4 = findViewById(R.id.btnBasicM4);
+//        btnIntermediaryM1 = findViewById(R.id.btnIntermediaryM1);
+//        btnIntermediaryM2 = findViewById(R.id.btnIntermediaryM2);
+//        btnIntermediaryM3 = findViewById(R.id.btnIntermediaryM3);
+//        btnIntermediaryM4 = findViewById(R.id.btnIntermediaryM4);
+//        btnAdvancedM1 = findViewById(R.id.btnAdvancedM1);
+//        btnAdvancedM2 = findViewById(R.id.btnAdvancedM2);
+//        btnAdvancedM3 = findViewById(R.id.btnAdvancedM3);
+//        btnAdvancedM4 = findViewById(R.id.btnAdvancedM4);
 
+        RetrofitConfig config = new RetrofitConfig();
+        this.lessonService = config.getLessonService();
     }
 
 

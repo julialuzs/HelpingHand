@@ -1,5 +1,7 @@
 package com.tcc.helpinghand.controllers;
 
+import com.tcc.helpinghand.controllers.response.LessonProjection;
+import com.tcc.helpinghand.controllers.response.LessonResponse;
 import com.tcc.helpinghand.controllers.response.QuestionResponse;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.models.Question;
@@ -31,12 +33,15 @@ public class LessonController {
         return lessonService.getAll();
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("/current-user")
-//    public List<Lesson> getAllByCurrentUser(@AuthenticationPrincipal CurrentUser currentUser) {
-//        User user = currentUser.getUser();
-//        return lessonService.getAllByUser(user);
-//    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/current-user")
+    public List<Lesson> getAllByCurrentUser(@AuthenticationPrincipal CurrentUser currentUser) {
+        User user = currentUser.getUser();
+
+        // usuario tem q ter um minimo de pontos
+        // + minimo de licoes respondidas corretamente para progredir
+        return lessonService.getAllByUser(user);
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/questions")

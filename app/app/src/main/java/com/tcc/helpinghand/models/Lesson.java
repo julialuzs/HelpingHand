@@ -3,10 +3,12 @@ package com.tcc.helpinghand.models;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.enums.Status;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Lesson {
+public class Lesson implements Serializable {
 
     private long idLesson;
 
@@ -17,5 +19,7 @@ public class Lesson {
     private Difficulty difficulty;
 
     private String module;
+
+    private int imageId;
 
 }
