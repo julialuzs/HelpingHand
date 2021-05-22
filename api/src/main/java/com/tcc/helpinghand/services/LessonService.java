@@ -1,7 +1,6 @@
 package com.tcc.helpinghand.services;
 
 import com.tcc.helpinghand.controllers.response.LessonProjection;
-import com.tcc.helpinghand.controllers.response.LessonResponse;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.enums.Status;
 import com.tcc.helpinghand.exceptions.ItemNotFoundException;
@@ -24,63 +23,57 @@ public class LessonService {
         return repository.findAll();
     }
 
-    public Lesson findById(long id) {
+    Lesson findById(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Lesson"));
     }
 
-    //TODO: refactor
     public List<Lesson> getAllByUser(User user) {
         List<LessonProjection> projections = repository.getAllByCurrentUser(user.getIdUser());
 
-        int rightAnswers = 0;
+        Difficulty difficulty = Difficulty.ADVANCED;
 
         if (user.getPoints() > 999) {
-            rightAnswers = projections.stream()
-                    .filter(projection -> projection.getDifficulty().equalsIgnoreCase("Básico"))
-                    .mapToInt(LessonProjection::getRightAnswers)
-                    .sum();
+            difficulty = Difficulty.BASIC;
         } else if (user.getPoints() > 3999) {
-            rightAnswers = projections.stream()
-                    .filter(projection -> projection.getDifficulty().equalsIgnoreCase("Intermediário"))
-                    .mapToInt(LessonProjection::getRightAnswers)
-                    .sum();
+            difficulty = Difficulty.INTERMEDIATE;
         }
 
-        int finalRightAnswers = rightAnswers;
+        int rightAnswers = getAmountOfCorrectAnswers(projections, difficulty);
+
         return projections
                 .stream()
-                .map(lesson -> mapLesson(lesson, finalRightAnswers))
+                .map(lesson -> mapLesson(lesson, rightAnswers))
                 .collect(Collectors.toList());
     }
 
-    //TODO: refactor
+    private int getAmountOfCorrectAnswers(List<LessonProjection> projections, Difficulty difficulty) {
+        return projections.stream()
+                .filter(projection -> projection.getDifficulty().equalsIgnoreCase(difficulty.getLabel()))
+                .mapToInt(LessonProjection::getRightAnswers)
+                .sum();
+    }
+
     private Lesson mapLesson(LessonProjection projection, int rightAnswers) {
+        Lesson lesson = new Lesson();
+        lesson.setIdLesson(projection.getIdLesson());
 
         Difficulty difficulty = Difficulty.getByName(projection.getDifficulty());
-        Lesson lesson = new Lesson();
-        lesson.setModule(projection.getModule());
         lesson.setDifficulty(difficulty);
-        lesson.setIdLesson(projection.getIdLesson());
-        lesson.setImageId(projection.getImageId());
 
-        if (projection.getDifficulty().equals("Básico")) {
-            lesson.setStatus(Status.INPROGRESS);
-        } else if (projection.getDifficulty().equals("Intermediário")) {
+        lesson.setModule(projection.getModule());
+        lesson.setImageName(projection.getImageName());
 
-            if (rightAnswers >= 20) {
-                lesson.setStatus(Status.INPROGRESS);
-            } else {
-                lesson.setStatus(Status.BLOCKED);
-            }
-        } else if (projection.getDifficulty().equals("Avançado")) {
+        Status status = Status.INPROGRESS;
 
-            if (rightAnswers >= 30) {
-                lesson.setStatus(Status.INPROGRESS);
-            } else {
-                lesson.setStatus(Status.BLOCKED);
-            }
+        if (projection.getDifficulty().equals(Difficulty.INTERMEDIATE.getLabel())) {
+            status = rightAnswers >= 20 ? Status.INPROGRESS : Status.BLOCKED;
+
+        } else if (projection.getDifficulty().equals(Difficulty.ADVANCED.getLabel())) {
+            status = rightAnswers >= 30 ? Status.INPROGRESS : Status.BLOCKED;
         }
+
+        lesson.setStatus(status);
         return lesson;
     }
 }

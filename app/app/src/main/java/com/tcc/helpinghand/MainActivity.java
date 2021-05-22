@@ -1,20 +1,12 @@
 package com.tcc.helpinghand;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import android.widget.ArrayAdapter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.models.Lesson;
-import com.tcc.helpinghand.models.Question;
 import com.tcc.helpinghand.services.LessonService;
 import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.TokenService;
@@ -22,6 +14,9 @@ import com.tcc.helpinghand.services.TokenService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,26 +25,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private BottomNavigationView bottomNavigation;
-    private ImageView imgLock1;
-    private ImageView imgLock2;
-    private ImageButton btnBasicM1;
-    private ImageButton btnBasicM2;
-    private ImageButton btnBasicM3;
-    private ImageButton btnBasicM4;
-    private ImageButton btnIntermediaryM1;
-    private ImageButton btnIntermediaryM2;
-    private ImageButton btnIntermediaryM3;
-    private ImageButton btnIntermediaryM4;
-    private ImageButton btnAdvancedM1;
-    private ImageButton btnAdvancedM2;
-    private ImageButton btnAdvancedM3;
-    private ImageButton btnAdvancedM4;
 
-    private Lesson lesson;
-    private Question question;
     List<Lesson> lessons;
     public LessonService lessonService;
-    ArrayAdapter<Lesson> adapterLesson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -57,47 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         this.initializeComponents();
-
-        this.checkLessonsStatus();
-
-//        btnBasicM1.setOnClickListener(this);
-//        btnBasicM2.setOnClickListener(this);
-//        btnBasicM3.setOnClickListener(this);
-//        btnBasicM4.setOnClickListener(this);
-//        btnIntermediaryM1.setOnClickListener(this);
-//        btnIntermediaryM2.setOnClickListener(this);
-//        btnIntermediaryM3.setOnClickListener(this);
-//        btnIntermediaryM4.setOnClickListener(this);
-//        btnAdvancedM1.setOnClickListener(this);
-//        btnAdvancedM2.setOnClickListener(this);
-//        btnAdvancedM3.setOnClickListener(this);
-//        btnAdvancedM4.setOnClickListener(this);
-
-
-        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment fragment = new HomeFragment();
-
-            switch (item.getItemId()) {
-                case R.id.nav_item_home:
-                    fragment = new HomeFragment();
-                    break;
-                case R.id.nav_item_dictionary:
-                    fragment = new DictionaryFragment();
-                    break;
-                case R.id.nav_item_feed:
-                    fragment = new FeedFragment();
-                    break;
-                case R.id.nav_item_person:
-                    fragment = new ProfileFragment();
-                    break;
-            }
-
-            transaction.replace(R.id.fl_fragment_container, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-            return true;
-        });
+        this.setNavBarClickListener();
+        this.loadLessons();
     }
 
     @Override
@@ -130,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
-    private void checkLessonsStatus() {
+    private void loadLessons() {
         String token = TokenService.getToken(MainActivity.this, getString(R.string.user_token_key));
 
         this.lessonService.getAllByCurrentUser(token).enqueue(new Callback<List<Lesson>>() {
@@ -138,32 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onResponse(Call<List<Lesson>> call, Response<List<Lesson>> response) {
                 if (response.isSuccessful()) {
                     lessons = response.body();
-
-                    List<Lesson> basicLessons = lessons.stream()
-                            .filter(lesson -> lesson.getDifficulty() == Difficulty.BASIC)
-                            .collect(Collectors.toList());
-
-                    List<Lesson> intermediateLessons = lessons.stream()
-                            .filter(lesson -> lesson.getDifficulty() == Difficulty.INTERMEDIATE)
-                            .collect(Collectors.toList());
-
-                    List<Lesson> advancedLessons = lessons.stream()
-                            .filter(lesson -> lesson.getDifficulty() == Difficulty.ADVANCED)
-                            .collect(Collectors.toList());
-
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                    Fragment fragmentBasic = LessonGroupFragment.newInstance(basicLessons);
-                    transaction.add(R.id.fl_lesson_group, fragmentBasic);
-
-                    Fragment fragmentIntermediate = LessonGroupFragment.newInstance(intermediateLessons);
-                    transaction.add(R.id.fl_lesson_group, fragmentIntermediate);
-
-                    Fragment fragmentAdvanced = LessonGroupFragment.newInstance(advancedLessons);
-                    transaction.add(R.id.fl_lesson_group, fragmentAdvanced);
-
-                    transaction.commit();
-
+                    openLessonsGroupFragment();
                 } else {
                     Toast.makeText(MainActivity.this, ":(((", Toast.LENGTH_SHORT).show();
                 }
@@ -176,25 +90,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private void openLessonsGroupFragment() {
+        List<Lesson> basicLessons = filterByDifficulty(Difficulty.BASIC);
+        List<Lesson> intermediateLessons = filterByDifficulty(Difficulty.INTERMEDIATE);
+        List<Lesson> advancedLessons = filterByDifficulty(Difficulty.ADVANCED);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        Fragment fragmentBasic = LessonGroupFragment.newInstance(basicLessons);
+        transaction.add(R.id.fl_lesson_group, fragmentBasic);
+
+        Fragment fragmentIntermediate = LessonGroupFragment.newInstance(intermediateLessons);
+        transaction.add(R.id.fl_lesson_group, fragmentIntermediate);
+
+        Fragment fragmentAdvanced = LessonGroupFragment.newInstance(advancedLessons);
+        transaction.add(R.id.fl_lesson_group, fragmentAdvanced);
+
+        transaction.commit();
+    }
+
+    private List<Lesson> filterByDifficulty(Difficulty difficulty) {
+        return lessons.stream()
+                .filter(lesson -> lesson.getDifficulty() == difficulty)
+                .collect(Collectors.toList());
+    }
+
     private void initializeComponents() {
         this.bottomNavigation = (BottomNavigationView) findViewById(R.id.bnv_nav_bar);
-//        imgLock1 = findViewById(R.id.imgLock1);
-//        imgLock2 = findViewById(R.id.imgLock2);
-//        btnBasicM1 = findViewById(R.id.btnBasicM1);
-//        btnBasicM2 = findViewById(R.id.btnBasicM2);
-//        btnBasicM3 = findViewById(R.id.btnBasicM3);
-//        btnBasicM4 = findViewById(R.id.btnBasicM4);
-//        btnIntermediaryM1 = findViewById(R.id.btnIntermediaryM1);
-//        btnIntermediaryM2 = findViewById(R.id.btnIntermediaryM2);
-//        btnIntermediaryM3 = findViewById(R.id.btnIntermediaryM3);
-//        btnIntermediaryM4 = findViewById(R.id.btnIntermediaryM4);
-//        btnAdvancedM1 = findViewById(R.id.btnAdvancedM1);
-//        btnAdvancedM2 = findViewById(R.id.btnAdvancedM2);
-//        btnAdvancedM3 = findViewById(R.id.btnAdvancedM3);
-//        btnAdvancedM4 = findViewById(R.id.btnAdvancedM4);
 
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
+    }
+
+    private void setNavBarClickListener() {
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = new HomeFragment();
+
+            switch (item.getItemId()) {
+                case R.id.nav_item_home:
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.nav_item_dictionary:
+                    fragment = new DictionaryFragment();
+                    break;
+                case R.id.nav_item_feed:
+                    fragment = new FeedFragment();
+                    break;
+                case R.id.nav_item_person:
+                    fragment = new ProfileFragment();
+                    break;
+            }
+
+            transaction.replace(R.id.fl_fragment_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+            return true;
+        });
     }
 
 

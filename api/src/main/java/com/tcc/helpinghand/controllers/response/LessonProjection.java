@@ -9,5 +9,5 @@ public interface LessonProjection {
 
     int getRightAnswers();
 
-    int getImageId();
+    String getImageName();
 }

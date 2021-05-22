@@ -20,6 +20,6 @@ public class Lesson implements Serializable {
 
     private String module;
 
-    private int imageId;
+    private String imageName;
 
 }

@@ -17,7 +17,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
                     ")\n" +
                     "select \n" +
                     "\tl.id_lesson as idLesson,\n" +
-                    "\tl.image_id as imageId,\n" +
+                    "\tl.image_name as imageName,\n" +
                     "\tl.difficulty,\n" +
                     "\tl.module,\n" +
                     "\tcount(qa.is_correct) as rightAnswers\n" +

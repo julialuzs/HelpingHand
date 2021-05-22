@@ -7,7 +7,6 @@ import com.tcc.helpinghand.enums.Status;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -31,6 +30,6 @@ public class Lesson {
     @Convert(converter = StatusConverter.class)
     private Status status;
 
-    private int imageId;
+    private String imageName;
 
 }

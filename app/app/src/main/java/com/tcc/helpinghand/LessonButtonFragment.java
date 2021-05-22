@@ -18,6 +18,8 @@ import com.tcc.helpinghand.models.Lesson;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.tcc.helpinghand.constants.Keys.LESSON_ID;
+
 public class LessonButtonFragment extends Fragment {
 
     private static final String BUNDLE_LESSON_KEY = "Lesson";
@@ -41,9 +43,6 @@ public class LessonButtonFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             lesson = (Lesson) getArguments().getSerializable(BUNDLE_LESSON_KEY);
-//            Drawable imageDrawable = getResources().getDrawable(lesson.getImageId());
-//            this.btLesson.setImageDrawable(imageDrawable);
-
         }
     }
 
@@ -59,18 +58,23 @@ public class LessonButtonFragment extends Fragment {
 
         btLesson.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity().getApplicationContext(), QuestionActivity.class);
-            intent.putExtra("LESSON_ID", this.lesson.getIdLesson());
+            intent.putExtra(LESSON_ID, this.lesson.getIdLesson());
             startActivity(intent);
-            // TODO: start QuestionActivity passing lesson id
         });
     }
 
     public void initializeComponents() {
         View view = getView();
         this.btLesson = view.findViewById(R.id.bt_lesson);
-//        R.drawable.apple
-        int resId = getResources()
-                .getIdentifier("apple", "drawable" , getActivity().getPackageName());
+        this.setImageOnButton();
+    }
+
+    private void setImageOnButton() {
+        int resId = getResources().getIdentifier(
+                lesson.getImageName(),
+                "drawable" ,
+                getActivity().getPackageName());
+
         this.btLesson.setImageResource(resId);
     }
 }
