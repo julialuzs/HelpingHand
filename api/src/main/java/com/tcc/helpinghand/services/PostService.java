@@ -21,7 +21,10 @@ public class PostService {
         return repository.save(post);
     }
 
-    public List<Post> getPosts() {
+    public List<Post> getPosts(String tag) {
+        if (tag != null) {
+            return repository.findByTag(tag);
+        }
         return repository.findAll();
     }
 }

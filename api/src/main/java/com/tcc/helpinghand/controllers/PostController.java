@@ -35,9 +35,9 @@ public class PostController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Post> post() {
+    public List<Post> getAllPosts(@RequestParam(required = false) String tag) {
 
-        return postService.getPosts();
+        return postService.getPosts(tag);
     }
 
     @PostMapping("/{id}/comment")
