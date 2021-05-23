@@ -45,7 +45,7 @@ public class QuestionService {
         boolean userAnsweredCorrectly = question.getCorrectAnswer().equalsIgnoreCase(userQuestion.getAnswer());
 
         QuestionResponse response = new QuestionResponse();
-        response.setAnswerWasCorrect(userAnsweredCorrectly);
+        response.setAnswerCorrect(userAnsweredCorrectly);
         userQuestion.setCorrect(userAnsweredCorrectly);
 
         if (userAnsweredCorrectly) {

@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class QuestionResponse {
 
-    boolean answerWasCorrect;
+    boolean answerCorrect;
+
     long pointsGained;
 
 //    boolean leveledUp;

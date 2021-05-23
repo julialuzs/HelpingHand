@@ -55,7 +55,14 @@ public class UnityPlayerFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
+        this.translate(true);
+    }
+
+    public void translate(boolean disableSubs) {
         UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
-        UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
+
+        if (disableSubs) {
+            UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
+        }
     }
 }

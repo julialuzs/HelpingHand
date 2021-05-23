@@ -1,9 +1,11 @@
 package com.tcc.helpinghand.models;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Question {
+public class Question implements Serializable {
 
     private long idQuestion;
 

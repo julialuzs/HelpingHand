@@ -1,6 +1,8 @@
 package com.tcc.helpinghand.models;
 
-public class Level {
+import java.io.Serializable;
+
+public class Level implements Serializable {
 
     private long idLevel;
 
