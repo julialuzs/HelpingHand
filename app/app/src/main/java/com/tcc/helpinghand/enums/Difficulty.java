@@ -2,9 +2,9 @@ package com.tcc.helpinghand.enums;
 
 public enum Difficulty {
 
-    BASIC("Básico"),
-    INTERMEDIATE("Intermediário"),
-    ADVANCED("Avançado");
+    BASIC("BÁSICAS"),
+    INTERMEDIATE("INTERMEDIÁRIAS"),
+    ADVANCED("AVANÇADAS");
 
     public final String label;
 

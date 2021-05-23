@@ -53,11 +53,14 @@ public class LessonGroupFragment extends Fragment {
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         initializeComponents();
+
+
         FragmentTransaction transaction = getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction();
 
         for (Lesson lesson: lessonsGroup) {
+            tvDifficulty.setText("LIÇÕES " + lesson.getDifficulty().label);
             Fragment lessonButton = LessonButtonFragment.newInstance(lesson);
             transaction.add(R.id.fl_lesson_buttons, lessonButton);
         }

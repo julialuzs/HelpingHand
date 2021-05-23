@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tcc.helpinghand.models.Lesson;
 
@@ -25,6 +27,7 @@ public class LessonButtonFragment extends Fragment {
     private static final String BUNDLE_LESSON_KEY = "Lesson";
 
     private ImageButton btLesson;
+    private TextView tvLesson;
     private Lesson lesson;
 
     public LessonButtonFragment() {
@@ -44,6 +47,7 @@ public class LessonButtonFragment extends Fragment {
         if (getArguments() != null) {
             lesson = (Lesson) getArguments().getSerializable(BUNDLE_LESSON_KEY);
         }
+
     }
 
     @Override
@@ -56,16 +60,28 @@ public class LessonButtonFragment extends Fragment {
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         initializeComponents();
 
+        tvLesson.setText(lesson.getModule().toString());
+
+        if(lesson.getStatus().toString().equals("BLOCKED")){
+            btLesson.setColorFilter(ContextCompat.getColor(getContext(), R.color.locked), android.graphics.PorterDuff.Mode.MULTIPLY);
+        }
+
         btLesson.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity().getApplicationContext(), QuestionActivity.class);
-            intent.putExtra(LESSON_ID, this.lesson.getIdLesson());
-            startActivity(intent);
+            if(lesson.getStatus().toString().equals("BLOCKED")){
+                Toast.makeText(getContext(), "Lição bloqueada", Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent = new Intent(getActivity().getApplicationContext(), QuestionActivity.class);
+                intent.putExtra(LESSON_ID, this.lesson.getIdLesson());
+                startActivity(intent);
+            }
+
         });
     }
 
     public void initializeComponents() {
         View view = getView();
         this.btLesson = view.findViewById(R.id.bt_lesson);
+        this.tvLesson = view.findViewById(R.id.tv_lesson);
         this.setImageOnButton();
     }
 
