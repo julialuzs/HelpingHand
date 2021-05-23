@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 public class TokenService {
 
     public static void registerToken(Context context, String key, String token) {
-
         SharedPreferences shared = context.
                 getSharedPreferences(
                         key, Context.MODE_PRIVATE

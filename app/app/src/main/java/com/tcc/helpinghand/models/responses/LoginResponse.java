@@ -8,4 +8,5 @@ import lombok.Data;
 public class LoginResponse implements Serializable {
 
     private String accessToken;
+
 }

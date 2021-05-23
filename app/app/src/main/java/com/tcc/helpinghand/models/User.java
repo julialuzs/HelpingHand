@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class User implements Serializable {
+
     private long idUser;
 
     private String email;
@@ -21,4 +22,5 @@ public class User implements Serializable {
     private String inviteCode;
 
     private Level level;
+
 }

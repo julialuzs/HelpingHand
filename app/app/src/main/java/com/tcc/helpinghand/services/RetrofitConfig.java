@@ -22,4 +22,8 @@ public class RetrofitConfig {
     public LessonService getLessonService() {
         return this.retrofit.create(LessonService.class);
     }
+
+    public PostService getPostService() {
+        return this.retrofit.create(PostService.class);
+    }
 }

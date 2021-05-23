@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserRequest implements Serializable {
 
     private String email;
+
     private String password;
 
 }

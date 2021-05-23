@@ -8,5 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AnswerQuestionRequest implements Serializable {
+
     String answer;
+
 }
