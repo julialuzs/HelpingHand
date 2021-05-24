@@ -8,9 +8,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
-
     <style name="Theme.HelpingHand.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+
+    </style>
+
 </resources>

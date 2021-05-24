@@ -1,5 +1,6 @@
 package com.tcc.helpinghand;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +35,10 @@ import retrofit2.Response;
 
 import static com.tcc.helpinghand.constants.Keys.LESSON_ID;
 
-public class QuestionActivity extends AppCompatActivity {
+public class QuestionActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+
+    private final String LESSON_CONCLUDED = "Lição concluída";
+    private final String LESSON_ANSWERED = "Lição respondida";
 
     UnityPlayerFragment fragment;
 
@@ -47,6 +51,8 @@ public class QuestionActivity extends AppCompatActivity {
     public List<Question> questions;
     public Question currentQuestion;
     public int currentQuestionIndex;
+
+    private QuestionResponse currentQuestionResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +105,16 @@ public class QuestionActivity extends AppCompatActivity {
         if (questions.size() > currentQuestionIndex) {
             loadCurrentQuestion();
         } else {
-            openDialog("Lição concluída!", "Parabéns, você concluiu uma lição");
+            currentQuestionResponse = null;
+            openDialog("Lição concluída!", "Parabéns, você concluiu uma lição", LESSON_CONCLUDED);
             Intent intent = new Intent(QuestionActivity.this, MainActivity.class);
             startActivity(intent);
         }
     }
 
-    private void openDialog(String title, String message) {
+    private void openDialog(String title, String message, String tag) {
         MessageDialog exampleDialog = new MessageDialog(title, message);
-        exampleDialog.show(getSupportFragmentManager(), "Message dialog");
+        exampleDialog.show(getSupportFragmentManager(), tag);
     }
 
     public void loadUnityFragment(String sign) {
@@ -122,16 +129,6 @@ public class QuestionActivity extends AppCompatActivity {
         transaction.add(R.id.fl_unity_fragment, fragment);
         transaction.commit();
     }
-
-//    public void removeCurrentFragment() {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        final FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        if (fragment != null) {
-//            transaction.remove(fragment);
-//            transaction.commit();
-//            fragment = null;
-//        }
-//    }
 
     public void setButtonsOnScreen(Question question) {
         String[] options = question.getAnswerOptions().split(";");
@@ -172,15 +169,18 @@ public class QuestionActivity extends AppCompatActivity {
             public void onResponse(Call<QuestionResponse> call, Response<QuestionResponse> response) {
                 if (response.isSuccessful()) {
                     QuestionResponse result = response.body();
+                    currentQuestionResponse = result;
+
                     String dialogTitle = result.isAnswerCorrect() ? "Resposta correta!" : "Resposta incorreta :(";
                     String dialogMessage = result.isAnswerCorrect() ?
                             "Você recebeu " + result.getPointsGained() + " pontos" : "Tente novamente";
 
-                    openDialog(dialogTitle, dialogMessage);
-
-                    if (result.isAnswerCorrect()) {
-                        goToNextQuestion();
+                    if (result.isLeveledUp()) {
+                        String levelUpMessage = "Você subiu para o nível " + result.getNewLevel().getDescription() + "!";
+                        dialogMessage = dialogMessage + "\n" + levelUpMessage;
                     }
+
+                    openDialog(dialogTitle, dialogMessage, LESSON_ANSWERED);
                 }
             }
 
@@ -201,6 +201,12 @@ public class QuestionActivity extends AppCompatActivity {
 
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
+    }
 
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        if (currentQuestionResponse.isAnswerCorrect()) {
+            goToNextQuestion();
+        }
     }
 }

@@ -52,7 +52,7 @@ public class UserService {
         return optional.orElseThrow(() -> new ItemNotFoundException("User"));
     }
 
-    public long receivePoints(User user, long points) {
+    public User receivePoints(User user, long points) {
         long currentPoints = user.getPoints();
         user.setPoints(currentPoints + points);
 
@@ -64,9 +64,8 @@ public class UserService {
             user.setLevel(level);
         }
 
-        repository.save(user);
-
-        return user.getPoints();
+        return repository.save(user);
+//        return user.getPoints();
     }
 
 }

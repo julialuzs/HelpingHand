@@ -4,6 +4,7 @@ import com.tcc.helpinghand.controllers.response.QuestionResponse;
 import com.tcc.helpinghand.exceptions.ItemNotFoundException;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.models.Question;
+import com.tcc.helpinghand.models.User;
 import com.tcc.helpinghand.models.UserQuestion;
 import com.tcc.helpinghand.repositories.QuestionRepository;
 import com.tcc.helpinghand.repositories.UserQuestionRepository;
@@ -48,14 +49,21 @@ public class QuestionService {
         response.setAnswerCorrect(userAnsweredCorrectly);
         userQuestion.setCorrect(userAnsweredCorrectly);
 
+        long previousLevelId = userQuestion.getUser().getLevel().getIdLevel();
+        User user = new User();
+
         if (userAnsweredCorrectly) {
-            userService.receivePoints(userQuestion.getUser(), lesson.getPoints());
+            user = userService.receivePoints(userQuestion.getUser(), lesson.getPoints());
             response.setPointsGained(lesson.getPoints());
         } else {
             response.setPointsGained(0);
         }
 
         userQuestionRepository.save(userQuestion);
+        // TODO: refactor
+        boolean userHasLeveledUp = previousLevelId != user.getLevel().getIdLevel();
+        response.setLeveledUp(userHasLeveledUp);
+        response.setNewLevel(user.getLevel());
 
         return response;
     }
