@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
 
     private BottomNavigationView bottomNavigation;
 
@@ -37,38 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         this.initializeComponents();
+        this.setPointsBar();
         this.setNavBarClickListener();
         this.loadLessons();
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        Toast.makeText(MainActivity.this, "Teste do click", Toast.LENGTH_SHORT).show();
-
-//        switch (view.getId()) {
-//            case R.id.btnBasicM1:
-//                btnBasicM1.setColorFilter(ContextCompat.getColor(MainActivity.this, R.color.locked), android.graphics.PorterDuff.Mode.MULTIPLY);
-//                break;
-//        }
-//
-//        switch ((view.getId())){
-//            case R.id.btnBasicM2:
-//                btnBasicM1.setColorFilter(null);
-//                break;
-//        }
-//
-//        switch ((view.getId())){
-//            case R.id.btnBasicM3:
-//                imgLock1.setVisibility(View.INVISIBLE);
-//                break;
-//        }
-//
-//        switch ((view.getId())){
-//            case R.id.btnBasicM4:
-//                imgLock1.setVisibility(View.VISIBLE);
-//                break;
-//        }
     }
 
     private void loadLessons() {
@@ -111,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
     }
 
+
     private List<Lesson> filterByDifficulty(Difficulty difficulty) {
         return lessons.stream()
                 .filter(lesson -> lesson.getDifficulty() == difficulty)
@@ -122,6 +94,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
+    }
+
+    public void setPointsBar() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = PointsFragment.newInstance();
+        transaction.add(R.id.teste1, fragment);
+        transaction.commit();
     }
 
     private void setNavBarClickListener() {
