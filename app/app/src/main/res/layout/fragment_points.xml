@@ -10,7 +10,7 @@
     android:orientation="horizontal"
     app:alignItems="center"
     app:justifyContent="space_between"
-    app:layout_minWidth="100dp"
+    app:layout_minWidth="110dp"
     tools:context=".PointsFragment">
 
     <LinearLayout
@@ -29,7 +29,7 @@
             android:drawablePadding="6dp"
             android:gravity="center_vertical"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:drawableStartCompat="@drawable/user"
             tools:text="teste" />
 
@@ -45,7 +45,7 @@
         android:drawablePadding="6dp"
         android:gravity="center_vertical"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:drawableEndCompat="@drawable/star"
         tools:text="0" />

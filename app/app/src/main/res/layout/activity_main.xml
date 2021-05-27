@@ -7,8 +7,6 @@
     android:background="@color/background_grey"
     tools:context=".MainActivity">
 
-<!--    <include android:id="@+id/testeA" layout="@layout/fragment_points"></include>-->
-
     <FrameLayout
         android:id="@+id/teste1"
         android:layout_width="match_parent"
@@ -19,31 +17,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
-
-    <ScrollView
-        android:id="@+id/sv_lessons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/fl_lesson_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="100dp"
-            app:alignItems="center"
-            app:flexDirection="column"
-            app:flexWrap="wrap">
-
-        </com.google.android.flexbox.FlexboxLayout>
-
-    </ScrollView>
 
     <FrameLayout
         android:id="@+id/fl_fragment_container"

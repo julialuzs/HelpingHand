@@ -22,8 +22,6 @@ import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.TokenService;
 import com.tcc.helpinghand.services.UserService;
 
-
-
 public class PointsFragment extends Fragment {
 
     private TextView tvLevel;
