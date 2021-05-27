@@ -21,7 +21,7 @@ public class Comment {
     @JoinColumn(name = "idPost")
     private Post post;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String content;
 
     private File attachment;

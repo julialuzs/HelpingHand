@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name="\"like\"")
+@Table(name = "\"like\"")
 public class Like {
 
     public Like(User user, Post post) {

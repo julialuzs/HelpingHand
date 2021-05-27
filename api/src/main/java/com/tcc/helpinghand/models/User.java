@@ -15,20 +15,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUser;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String email;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String password;
 
     private boolean isDeaf;
 
     private long points;
 
-    @Column(length = 10, nullable=false)
+    @Column(length = 10, nullable = false)
     private String inviteCode;
 
     @ManyToOne

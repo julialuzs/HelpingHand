@@ -15,7 +15,6 @@ public class AchievementService {
     private AchievementRepository achievementRepository;
 
     public List<Achievement> getUserAchievements(User user) {
-
         return achievementRepository.findByUser(user);
     }
 

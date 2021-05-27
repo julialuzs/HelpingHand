@@ -12,7 +12,7 @@ public class Level {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idLevel;
 
-    @Column(length = 100, nullable=false)
+    @Column(length = 100, nullable = false)
     private String description;
 
     private long maxPoints;

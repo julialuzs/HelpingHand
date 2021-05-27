@@ -37,8 +37,8 @@ import static com.tcc.helpinghand.constants.Keys.LESSON_ID;
 
 public class QuestionActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
 
-    private final String LESSON_CONCLUDED = "Lição concluída";
-    private final String LESSON_ANSWERED = "Lição respondida";
+    private static final String LESSON_CONCLUDED = "Lição concluída";
+    private static final String LESSON_ANSWERED = "Lição respondida";
 
     UnityPlayerFragment fragment;
 
@@ -153,9 +153,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     }
 
     private void answerQuestion(String text) {
-        String token = TokenService.getToken(
-                QuestionActivity.this, getString(R.string.user_token_key)
-        );
+        String token = TokenService.getToken(QuestionActivity.this, getString(R.string.user_token_key));
 
         Call<QuestionResponse> call = lessonService.answerQuestion(
                 token,

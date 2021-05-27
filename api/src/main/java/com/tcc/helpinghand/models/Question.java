@@ -12,16 +12,16 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idQuestion;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String sign;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String correctAnswer;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String answerOptions;
 
     @ManyToOne

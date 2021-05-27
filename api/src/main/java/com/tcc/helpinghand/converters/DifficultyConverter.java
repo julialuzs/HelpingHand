@@ -1,7 +1,6 @@
 package com.tcc.helpinghand.converters;
 
 import com.tcc.helpinghand.enums.Difficulty;
-import com.tcc.helpinghand.enums.Status;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.services.LessonService;
@@ -26,6 +27,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity  {
 
     private BottomNavigationView bottomNavigation;
+    public CircularProgressIndicator progressCircle;
+
+    public List<Lesson> lessons;
+    public LessonService lessonService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -41,8 +46,6 @@ public class MainActivity extends AppCompatActivity  {
         transaction.commit();
 
         this.setNavBarClickListener();
-
-
     }
 
     private void initializeComponents() {
