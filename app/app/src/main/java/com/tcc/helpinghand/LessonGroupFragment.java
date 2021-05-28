@@ -28,6 +28,28 @@ public class LessonGroupFragment extends Fragment {
     public LessonGroupFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getArguments() != null) {
+            this.lessonsGroup = (List<Lesson>) getArguments().getSerializable(ARGS_LESSONS_KEY);
+        }
+
+        initializeComponents();
+
+        FragmentTransaction transaction = getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction();
+
+        for (Lesson lesson: lessonsGroup) {
+//            tvDifficulty.setText("LIÇÕES " + lesson.getDifficulty().label);
+            Fragment lessonButton = LessonButtonFragment.newInstance(lesson);
+            transaction.add(R.id.fl_lesson_buttons, lessonButton);
+        }
+        transaction.commit();
+    }
+
     public static LessonGroupFragment newInstance(List<Lesson> lessons) {
         LessonGroupFragment fragment = new LessonGroupFragment();
         Bundle args = new Bundle();
@@ -39,9 +61,6 @@ public class LessonGroupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            this.lessonsGroup = (List<Lesson>) getArguments().getSerializable(ARGS_LESSONS_KEY);
-        }
     }
 
     @Override
@@ -52,23 +71,20 @@ public class LessonGroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        initializeComponents();
-
-
-        FragmentTransaction transaction = getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction();
-
-        for (Lesson lesson: lessonsGroup) {
-            tvDifficulty.setText("LIÇÕES " + lesson.getDifficulty().label);
-            Fragment lessonButton = LessonButtonFragment.newInstance(lesson);
-            transaction.add(R.id.fl_lesson_buttons, lessonButton);
-        }
-        transaction.commit();
+//                FragmentTransaction transaction = getActivity()
+//                .getSupportFragmentManager()
+//                .beginTransaction();
+//
+//        for (Lesson lesson: lessonsGroup) {
+//            tvDifficulty.setText("LIÇÕES " + lesson.getDifficulty().label);
+//            Fragment lessonButton = LessonButtonFragment.newInstance(lesson);
+//            transaction.add(R.id.fl_lesson_buttons, lessonButton);
+//        }
+//        transaction.commit();
     }
 
     public void initializeComponents() {
         View view = getView();
-        this.tvDifficulty = view.findViewById(R.id.tv_difficulty);
+//        this.tvDifficulty = view.findViewById(R.id.tv_difficulty);
     }
 }

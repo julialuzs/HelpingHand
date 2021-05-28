@@ -9,17 +9,17 @@
     app:alignItems="center"
     tools:context=".LessonGroupFragment">
 
-    <TextView
-        android:id="@+id/tv_difficulty"
-        android:text="LIÇÕES"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="12dp"
-        android:textColor="#050000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_alignSelf="center" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_difficulty"-->
+<!--        android:text="LIÇÕES"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginBottom="12dp"-->
+<!--        android:textColor="#050000"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_alignSelf="center" />-->
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/fl_lesson_buttons"

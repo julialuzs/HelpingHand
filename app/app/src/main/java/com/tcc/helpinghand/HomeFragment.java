@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,20 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.initializeComponents();
+        this.loadLessons();
+        Log.i("debug", "onResume");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("debug", "destroy da home");
+    }
+
     private void loadLessons() {
         String token = TokenService.getToken(getContext(), getString(R.string.user_token_key));
 
@@ -74,17 +89,26 @@ public class HomeFragment extends Fragment {
         List<Lesson> intermediateLessons = filterByDifficulty(Difficulty.INTERMEDIATE);
         List<Lesson> advancedLessons = filterByDifficulty(Difficulty.ADVANCED);
 
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction;
+        transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Fragment fragmentBasic = LessonGroupFragment.newInstance(basicLessons);
-        transaction.add(R.id.fl_lesson_group, fragmentBasic);
+        transaction.add(R.id.fl_lesson_group_basic, fragmentBasic);
 
+
+        FragmentTransaction transaction1;
+        transaction = getActivity().getSupportFragmentManager().beginTransaction();
         Fragment fragmentIntermediate = LessonGroupFragment.newInstance(intermediateLessons);
-        transaction.add(R.id.fl_lesson_group, fragmentIntermediate);
+        transaction.add(R.id.fl_lesson_group_intermediary, fragmentIntermediate);
+
+
+        FragmentTransaction transaction2;
+        transaction = getActivity().getSupportFragmentManager().beginTransaction();
 
         Fragment fragmentAdvanced = LessonGroupFragment.newInstance(advancedLessons);
-        transaction.add(R.id.fl_lesson_group, fragmentAdvanced);
+        transaction.add(R.id.fl_lesson_group_advanced, fragmentAdvanced);
 
+//        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -97,15 +121,16 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.initializeComponents();
-        this.loadLessons();
+//        this.initializeComponents();
+//        this.loadLessons();
 
+//        fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        initializeComponents();
+//        initializeComponents();
     }
 
     private void initializeComponents() {

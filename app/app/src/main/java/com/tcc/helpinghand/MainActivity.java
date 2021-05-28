@@ -1,6 +1,7 @@
 package com.tcc.helpinghand;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,17 +33,29 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         this.initializeComponents();
         this.setPointsBar();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = new HomeFragment();
         transaction.replace(R.id.fl_fragment_container, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
-
         this.setNavBarClickListener();
 
+        Log.i("debug", "mainActivity");
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("debug", "onDestroy");
     }
 
     private void initializeComponents() {
@@ -53,6 +66,7 @@ public class MainActivity extends AppCompatActivity  {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = PointsFragment.newInstance();
         transaction.add(R.id.teste1, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

@@ -55,11 +55,19 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     private QuestionResponse currentQuestionResponse;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_question);
 
-        initializeComponents();
+        this.initializeComponents();
+
         lessonId = getIntent().getExtras().getLong(LESSON_ID);
 
         Call<List<Question>> call = this.lessonService.getQuestionsByLesson(lessonId);
@@ -79,7 +87,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
 
@@ -98,6 +106,13 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
         setButtonsOnScreen(currentQuestion);
         setQuestionDescription(currentQuestion.getDescription());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(QuestionActivity.this, MainActivity.class);
+        //to do - adicionar um dialog p confimar se o usuario quer voltar
+        startActivity(intent);
     }
 
     public void goToNextQuestion() {
@@ -127,6 +142,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
         fragment.setArguments(bundle);
 
         transaction.add(R.id.fl_unity_fragment, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -186,7 +202,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
             @Override
             public void onFailure(Call<QuestionResponse> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
@@ -209,4 +225,5 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
             goToNextQuestion();
         }
     }
+
 }
