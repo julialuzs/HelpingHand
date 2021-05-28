@@ -23,4 +23,6 @@
 
     <string name="like_label">Curtir</string>
     <string name="comment_label">Comentários</string>
+    <string name="post_label">Postagem</string>
+    <string name="post_body_hint">Que experiência quer compartilhar hoje?</string>
 </resources>
