@@ -30,16 +30,15 @@ public class LessonService {
 
     public List<Lesson> getAllByUser(User user) {
         List<LessonProjection> projections = repository.getAllByCurrentUser(user.getIdUser());
-
         Difficulty difficulty = Difficulty.ADVANCED;
 
-        if (user.getPoints() > 999) {
+        if (user.getPoints() <= 999) {
             difficulty = Difficulty.BASIC;
-        } else if (user.getPoints() > 3999) {
+        } else if (user.getPoints() <= 3999) {
             difficulty = Difficulty.INTERMEDIATE;
         }
 
-        int rightAnswers = getAmountOfCorrectAnswers(projections, difficulty);
+        int rightAnswers = getAmountOfCorrectAnswersByDifficulty(projections, difficulty);
 
         return projections
                 .stream()
@@ -47,7 +46,7 @@ public class LessonService {
                 .collect(Collectors.toList());
     }
 
-    private int getAmountOfCorrectAnswers(List<LessonProjection> projections, Difficulty difficulty) {
+    private int getAmountOfCorrectAnswersByDifficulty(List<LessonProjection> projections, Difficulty difficulty) {
         return projections.stream()
                 .filter(projection -> projection.getDifficulty().equalsIgnoreCase(difficulty.getLabel()))
                 .mapToInt(LessonProjection::getRightAnswers)
