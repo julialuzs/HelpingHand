@@ -2,17 +2,13 @@ package com.tcc.helpinghand;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.tcc.helpinghand.dialogs.MessageDialog;
 import com.tcc.helpinghand.models.Question;
 import com.tcc.helpinghand.models.requests.AnswerQuestionRequest;
@@ -25,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
@@ -43,6 +39,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     UnityPlayerFragment fragment;
 
     private TextView tvDescription;
+    private TextView tvQuestionNumber;
     private FlexboxLayout flAnswerOptions;
 
     public LessonService lessonService;
@@ -97,7 +94,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
         }
 
         setButtonsOnScreen(currentQuestion);
-        setQuestionDescription(currentQuestion.getDescription());
+        setQuestionInfo(currentQuestionIndex, currentQuestion.getDescription());
     }
 
     public void goToNextQuestion() {
@@ -133,9 +130,15 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     public void setButtonsOnScreen(Question question) {
         String[] options = question.getAnswerOptions().split(";");
         flAnswerOptions.removeAllViews();
+
         for (String option : options) {
 
             Button button = new Button(this);
+            button.setTextColor(ContextCompat.getColor(this, R.color.primary_blue));
+            button.setPadding(8, 8, 8, 8);
+            button.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.background_grey), PorterDuff.Mode.MULTIPLY
+            );
             button.setText(option);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -189,11 +192,14 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
         });
     }
 
-    public void setQuestionDescription(String description) {
+    public void setQuestionInfo(int questionNumber, String description) {
         tvDescription.setText(description);
+        String question = "Questão " + questionNumber + 1;
+        tvQuestionNumber.setText(question);
     }
 
     private void initializeComponents() {
+        this.tvQuestionNumber = findViewById(R.id.tv_question_number);
         this.tvDescription = findViewById(R.id.tv_question_description);
         this.flAnswerOptions = findViewById(R.id.fl_answer_options);
 

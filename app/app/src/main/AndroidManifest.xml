@@ -12,7 +12,9 @@
         android:theme="@style/Theme.HelpingHand"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".PostActivity"></activity>
+        <activity
+            android:name=".PostActivity"
+            android:theme="@style/Theme.HelpingHand.NoActionBar" />
         <activity
             android:name=".QuestionActivity"
             android:theme="@style/Theme.HelpingHand.NoActionBar" />

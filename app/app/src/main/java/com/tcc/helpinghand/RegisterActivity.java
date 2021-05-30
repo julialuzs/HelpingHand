@@ -16,7 +16,9 @@ import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.tcc.helpinghand.models.User;
+import com.tcc.helpinghand.models.responses.LoginResponse;
 import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
 import com.tcc.helpinghand.services.UserService;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.tcc.helpinghand.constants.RequestMessages.SERVER_ERROR;
+import static com.tcc.helpinghand.constants.RequestMessages.USER_CREATED;
+import static com.tcc.helpinghand.constants.ValidationMessages.FIELD_EMPTY;
+import static com.tcc.helpinghand.constants.ValidationMessages.FIELD_INVALID;
+import static com.tcc.helpinghand.constants.ValidationMessages.INVALID_PASSWORD_CONFIRMATION;
+import static com.tcc.helpinghand.constants.ValidationMessages.PASSWORD_INVALID;
+import static com.tcc.helpinghand.constants.ValidationMessages.SIZE_LIMIT_EXCEEDED;
+
 public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener{
 
     public UserService userService;
@@ -36,18 +46,18 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
     private Button btBack;
     private Validator validator;
 
-    @NotEmpty(message = "O nome precisa ser preenchido")
-    @Length(max = 150, message = "O tamanho máximo é de 150 caracteres")
+    @NotEmpty(message = FIELD_EMPTY)
+    @Length(max = 150, message = SIZE_LIMIT_EXCEEDED)
     private EditText etName;
 
-    @NotEmpty(message = "O email precisa ser preenchido")
-    @Email(message = "E-mail inválido")
+    @NotEmpty(message = FIELD_EMPTY)
+    @Email(message = FIELD_INVALID)
     private EditText etEmail;
 
-    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC, message="A senha deve ter no mínimo 6 caracteres alfabéticos e numéricos")
+    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC, message=PASSWORD_INVALID)
     private EditText etPassword;
 
-    @ConfirmPassword(message="As senhas devem ser iguais")
+    @ConfirmPassword(message=INVALID_PASSWORD_CONFIRMATION)
     private EditText etConfirmPassword;
 
 
@@ -63,7 +73,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
 
         this.btSignIn.setOnClickListener(view -> {
             validator.validate();
-
         });
 
         this.btBack.setOnClickListener(view -> {
@@ -103,17 +112,27 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
                 Toast.LENGTH_LONG).show();
     }
 
+    public void registerToken(String token) {
+        TokenService.registerToken(
+                getApplicationContext(),
+                getString(R.string.user_token_key),
+                token
+        );
+    }
+
     @Override
     public void onValidationSucceeded() {
         User user = getUser();
-        Call<User> call = userService.signin(user);
+        Call<LoginResponse> call = userService.signin(user);
 
-        call.enqueue(new Callback<User>() {
+
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                 if (response.isSuccessful()) {
-                    showToast("Usuário criado com sucesso!");
+                    showToast(USER_CREATED);
+                    registerToken(response.body().getAccessToken());
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
 
                 } else {
@@ -122,8 +141,8 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                showToast("Um erro ocorreu. Tente novamente mais tarde");
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                showToast(SERVER_ERROR);
             }
         });
     }

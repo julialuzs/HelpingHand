@@ -29,8 +29,8 @@ import retrofit2.Response;
 
 import static com.tcc.helpinghand.constants.RequestMessages.AUTH_ERROR;
 import static com.tcc.helpinghand.constants.RequestMessages.SERVER_ERROR;
-import static com.tcc.helpinghand.constants.ValidationMessages.EMAIL_EMPTY;
-import static com.tcc.helpinghand.constants.ValidationMessages.EMAIL_INVALID;
+import static com.tcc.helpinghand.constants.ValidationMessages.FIELD_EMPTY;
+import static com.tcc.helpinghand.constants.ValidationMessages.FIELD_INVALID;
 import static com.tcc.helpinghand.constants.ValidationMessages.PASSWORD_INVALID;
 
 public class LoginActivity extends AppCompatActivity  implements Validator.ValidationListener {
@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity  implements Validator.Valid
     private Validator validator;
     public UserService userService;
 
-    @NotEmpty(message = EMAIL_EMPTY)
-    @Email(message = EMAIL_INVALID)
+    @NotEmpty(message = FIELD_EMPTY)
+    @Email(message = FIELD_INVALID)
     private EditText etEmail;
 
     @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC, message=PASSWORD_INVALID)

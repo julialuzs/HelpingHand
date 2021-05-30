@@ -48,21 +48,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_post_body" />
 
-        <EditText
+<!--        <EditText-->
+<!--            android:id="@+id/et_post_title"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Título"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:layout_margin="@dimen/general_space"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/et_post_body"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/tv_post_label" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_post_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Título"
-            android:inputType="textPersonName"
             android:layout_margin="@dimen/general_space"
             app:layout_constraintBottom_toTopOf="@+id/et_post_body"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_label" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_label"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundColor="#fff"
+            android:hint="Título">
 
-        <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_post_body"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -70,13 +91,25 @@
             android:layout_marginBottom="16dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="@string/post_body_hint"
-            android:inputType="textMultiLine"
             android:minHeight="50dp"
+            app:boxBackgroundColor="#fff"
             app:layout_constraintBottom_toTopOf="@id/bt_post_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_post_title" />
+            app:layout_constraintTop_toBottomOf="@+id/et_post_title">
+
+<!--            android:hint="@string/post_body_hint"-->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:scrollbars="vertical"
+                android:hint="O que você tem a dizer?"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

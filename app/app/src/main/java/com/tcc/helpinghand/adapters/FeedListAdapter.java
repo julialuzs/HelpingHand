@@ -1,4 +1,4 @@
-package com.tcc.helpinghand.adapter;
+package com.tcc.helpinghand.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,10 +27,11 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         }
 
         TextView tvUserName = convertView.findViewById(R.id.tv_post_username);
+        TextView tvTitle = convertView.findViewById(R.id.tv_post_title);
         TextView tvLike = convertView.findViewById(R.id.tv_post_like);
         TextView tvText = convertView.findViewById(R.id.tv_post_text);
         tvUserName.setText(quote.getAuthor().getName());
-//        tvLike.setText(quote.getLi.getAuthor().getName());
+        tvTitle.setText(quote.getTitle());
         tvText.setText(quote.getBody());
 
         return convertView;
