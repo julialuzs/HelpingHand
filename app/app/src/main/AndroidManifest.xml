@@ -19,9 +19,6 @@
             android:name=".QuestionActivity"
             android:theme="@style/Theme.HelpingHand.NoActionBar" />
         <activity
-            android:name=".LessonActivity"
-            android:theme="@style/Theme.HelpingHand.NoActionBar" />
-        <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.HelpingHand.NoActionBar" />
         <activity

@@ -76,7 +76,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
 
@@ -84,7 +84,6 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
     void loadCurrentQuestion() {
         currentQuestion = questions.get(currentQuestionIndex);
-//        removeCurrentFragment();
 
         if (fragment == null) {
             loadUnityFragment(currentQuestion.getSign());
@@ -120,6 +119,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
         Bundle bundle = new Bundle();
         bundle.putString("sign", sign);
+        bundle.putBoolean("disableSubs", true);
         fragment = new UnityPlayerFragment();
         fragment.setArguments(bundle);
 
@@ -187,7 +187,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
             @Override
             public void onFailure(Call<QuestionResponse> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
@@ -212,5 +212,12 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
         if (currentQuestionResponse.isAnswerCorrect()) {
             goToNextQuestion();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(QuestionActivity.this, MainActivity.class);
+        //to do - adicionar um dialog p confimar se o usuario quer voltar
+        startActivity(intent);
     }
 }

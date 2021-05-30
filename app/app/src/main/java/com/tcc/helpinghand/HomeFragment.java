@@ -1,19 +1,11 @@
 package com.tcc.helpinghand;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.services.LessonService;
@@ -22,31 +14,24 @@ import com.tcc.helpinghand.services.TokenService;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.tcc.helpinghand.constants.Keys.LESSON_ID;
+import static com.tcc.helpinghand.constants.RequestMessages.SERVER_ERROR;
 
 public class HomeFragment extends Fragment {
 
-    private static final String LESSONS_LIST_KEY = "Lessons";
-
-    List<Lesson> lessons;
     public LessonService lessonService;
+    List<Lesson> lessons;
 
-    public HomeFragment() {
-    }
-
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
+    public HomeFragment() { }
 
     private void loadLessons() {
         String token = TokenService.getToken(getContext(), getString(R.string.user_token_key));
@@ -64,7 +49,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Lesson>> call, Throwable t) {
-                Toast.makeText(getContext(), "Ocorreu um problema ao carregar os dados do servidor. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+                Toast.makeText(getContext(), SERVER_ERROR, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -97,21 +83,19 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.initializeComponents();
-        this.loadLessons();
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        initializeComponents();
+        this.initializeComponents();
+        this.loadLessons();
     }
 
     private void initializeComponents() {
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
     }
-
 
 }

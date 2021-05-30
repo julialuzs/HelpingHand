@@ -69,4 +69,8 @@ public class QuestionService {
 
         return response;
     }
+
+    public List<String> getAllCorrectAnswers() {
+        return questionRepository.findAllCorrectAnswers();
+    }
 }

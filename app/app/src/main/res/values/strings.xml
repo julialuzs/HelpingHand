@@ -23,4 +23,6 @@
     <string name="comment_label">Comentários</string>
     <string name="post_label">Postagem</string>
     <string name="post_body_hint">Que experiência quer compartilhar hoje?</string>
+    <string name="home_title">Trilha de aprendizado</string>
+    <string name="hint_search_sign">Busque um sinal</string>
 </resources>

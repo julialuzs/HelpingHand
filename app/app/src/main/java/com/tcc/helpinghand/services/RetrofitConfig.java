@@ -26,4 +26,8 @@ public class RetrofitConfig {
     public PostService getPostService() {
         return this.retrofit.create(PostService.class);
     }
+
+    public DictionaryService getDictionaryService() {
+        return this.retrofit.create(DictionaryService.class);
+    }
 }

@@ -35,26 +35,18 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
         this.initializeComponents();
-        this.setPointsBar();
-        this.setMainFragmentContainer();
+        this.setFragments();
         this.setNavBarClickListener();
     }
 
-    private void initializeComponents() {
-        this.bottomNavigation = (BottomNavigationView) findViewById(R.id.bnv_nav_bar);
-    }
-
-    public void setMainFragmentContainer() {
+    public void setFragments() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = new HomeFragment();
-        transaction.replace(R.id.fl_fragment_container, fragment);
-        transaction.commit();
-    }
+        Fragment home = new HomeFragment();
+        transaction.replace(R.id.fl_fragment_container, home);
 
-    public void setPointsBar() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = PointsFragment.newInstance();
-        transaction.add(R.id.teste1, fragment);
+        Fragment pointsBar = PointsFragment.newInstance();
+        transaction.add(R.id.points_bar, pointsBar);
+
         transaction.commit();
     }
 
@@ -83,6 +75,10 @@ public class MainActivity extends AppCompatActivity  {
             transaction.commit();
             return true;
         });
+    }
+
+    private void initializeComponents() {
+        this.bottomNavigation = (BottomNavigationView) findViewById(R.id.bnv_nav_bar);
     }
 
 }

@@ -142,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                t.printStackTrace();
                 showToast(SERVER_ERROR);
             }
         });

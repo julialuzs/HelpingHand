@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.tcc.helpinghand.models.Lesson;
 import com.unity3d.player.UnityPlayer;
 
 public class UnityPlayerFragment extends Fragment {
@@ -17,6 +18,7 @@ public class UnityPlayerFragment extends Fragment {
     FrameLayout frameLayoutForUnity;
 
     public String sign;
+    public boolean disableSubs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +26,7 @@ public class UnityPlayerFragment extends Fragment {
 
         mUnityPlayer = new UnityPlayer(getActivity());
         sign = getArguments().getString("sign");
+        disableSubs = getArguments().getBoolean("disableSubs");
         View view = inflater.inflate(R.layout.fragment_unity_player, container, false);
 
         this.frameLayoutForUnity = view.findViewById(R.id.fl_unity_layout);
@@ -36,6 +39,17 @@ public class UnityPlayerFragment extends Fragment {
         mUnityPlayer.requestFocus();
         mUnityPlayer.windowFocusChanged(true);
         return view;
+    }
+
+    public static UnityPlayerFragment newInstance(
+            String signToTranslate, boolean disableSubs
+    ) {
+        UnityPlayerFragment fragment = new UnityPlayerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("sign", signToTranslate);
+        bundle.putBoolean("disableSubs", false);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -55,14 +69,13 @@ public class UnityPlayerFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
-        this.translate(true);
+        this.translate(disableSubs);
     }
 
     public void translate(boolean disableSubs) {
-        UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
-
         if (disableSubs) {
             UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
         }
+        UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
     }
 }

@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity  implements Validator.Valid
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_login);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
         this.initializeComponents();
         this.setOnClickListeners();
     }
@@ -95,6 +93,9 @@ public class LoginActivity extends AppCompatActivity  implements Validator.Valid
         this.etEmail = findViewById(R.id.et_email);
         this.tvLinkRegister = findViewById(R.id.tv_link_register);
 
+        validator = new Validator(this);
+        validator.setValidationListener(this);
+
         RetrofitConfig config = new RetrofitConfig();
         this.userService = config.getUserService();
     }
@@ -121,6 +122,7 @@ public class LoginActivity extends AppCompatActivity  implements Validator.Valid
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), SERVER_ERROR, Toast.LENGTH_LONG).show();
+                t.printStackTrace();
             }
         });
     }

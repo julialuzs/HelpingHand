@@ -58,6 +58,7 @@ public class LessonController {
         User user = currentUser.getUser();
         Lesson lesson = new Lesson();
         lesson.setIdLesson(lessonId);
+
         Question question = new Question();
         question.setLesson(lesson);
         question.setIdQuestion(questionId);

@@ -1,14 +1,7 @@
 package com.tcc.helpinghand;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +12,10 @@ import android.widget.Toast;
 import com.tcc.helpinghand.models.Lesson;
 
 import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import static com.tcc.helpinghand.constants.Keys.LESSON_ID;
 
@@ -59,17 +56,21 @@ public class LessonButtonFragment extends Fragment {
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
         initializeComponents();
+        boolean isBlocked = lesson.getStatus().toString().equals("BLOCKED"); 
 
         tvLesson.setText(lesson.getModule().toString());
 
-        if(lesson.getStatus().toString().equals("BLOCKED")){
-            btLesson.setColorFilter(ContextCompat.getColor(getContext(), R.color.locked), android.graphics.PorterDuff.Mode.MULTIPLY);
+        if (isBlocked) {
+            btLesson.setColorFilter(
+                    ContextCompat.getColor(getContext(), R.color.locked),
+                    android.graphics.PorterDuff.Mode.MULTIPLY
+            );
         }
 
         btLesson.setOnClickListener(v -> {
-            if(lesson.getStatus().toString().equals("BLOCKED")){
-                Toast.makeText(getContext(), "Lição bloqueada", Toast.LENGTH_SHORT).show();
-            }else{
+            if (isBlocked) {
+                Toast.makeText(getContext(), "Lição bloqueada!", Toast.LENGTH_SHORT).show();
+            } else {
                 Intent intent = new Intent(getActivity().getApplicationContext(), QuestionActivity.class);
                 intent.putExtra(LESSON_ID, this.lesson.getIdLesson());
                 startActivity(intent);
@@ -88,7 +89,7 @@ public class LessonButtonFragment extends Fragment {
     private void setImageOnButton() {
         int resId = getResources().getIdentifier(
                 lesson.getImageName(),
-                "drawable" ,
+                "drawable",
                 getActivity().getPackageName());
 
         this.btLesson.setImageResource(resId);

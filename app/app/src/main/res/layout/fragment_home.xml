@@ -19,16 +19,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/fl_lesson_group"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="100dp"
-            app:alignItems="center"
-            app:flexDirection="column"
-            app:flexWrap="wrap">
+            android:orientation="vertical">
 
-        </com.google.android.flexbox.FlexboxLayout>
+            <TextView
+                android:id="@+id/tv_home_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/home_title"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#050000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_alignSelf="center" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/fl_lesson_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="100dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:flexWrap="wrap">
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 

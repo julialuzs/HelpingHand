@@ -21,7 +21,6 @@ import java.util.List;
 public class LessonGroupFragment extends Fragment {
 
     private static final String ARGS_LESSONS_KEY = "Lessons";
-    private TextView tvDifficulty;
 
     private List<Lesson> lessonsGroup;
 
@@ -52,23 +51,15 @@ public class LessonGroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        initializeComponents();
-
-
         FragmentTransaction transaction = getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction();
 
         for (Lesson lesson: lessonsGroup) {
-            tvDifficulty.setText("LIÇÕES " + lesson.getDifficulty().label);
             Fragment lessonButton = LessonButtonFragment.newInstance(lesson);
             transaction.add(R.id.fl_lesson_buttons, lessonButton);
         }
         transaction.commit();
     }
 
-    public void initializeComponents() {
-        View view = getView();
-        this.tvDifficulty = view.findViewById(R.id.tv_difficulty);
-    }
 }
