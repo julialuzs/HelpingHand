@@ -25,8 +25,14 @@ public class PublicUserController {
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public User signIn(@RequestBody User user) {
-        return userService.signIn(user);
+    public LoginResponse signIn(@RequestBody User user) {
+        userService.signIn(user);
+
+        String token = authenticationService.authenticate(user.getEmail(), user.getPassword());
+
+        logService.registerLog(user);
+
+        return new LoginResponse(token);
     }
 
     @PostMapping("/login")

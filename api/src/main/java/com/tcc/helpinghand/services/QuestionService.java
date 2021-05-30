@@ -61,9 +61,11 @@ public class QuestionService {
 
         userQuestionRepository.save(userQuestion);
         // TODO: refactor
-        boolean userHasLeveledUp = previousLevelId != user.getLevel().getIdLevel();
-        response.setLeveledUp(userHasLeveledUp);
-        response.setNewLevel(user.getLevel());
+        if (user.getLevel() != null) {
+            boolean userHasLeveledUp = previousLevelId != user.getLevel().getIdLevel();
+            response.setLeveledUp(userHasLeveledUp);
+            response.setNewLevel(user.getLevel());
+        }
 
         return response;
     }

@@ -4,26 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/background_grey"
     tools:context=".QuestionActivity">
+
+    <TextView
+        android:id="@+id/tv_question_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/general_space"
+        android:textColor="@color/primary_blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/fl_unity_fragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/fl_unity_fragment"
         android:layout_width="0dp"
         android:layout_height="500dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:padding="@dimen/general_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_number" >
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_question_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:padding="@dimen/general_space"
         android:textColor="#050000"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:padding="@dimen/general_space"
         app:alignContent="center"
         app:alignItems="center"
         app:flexDirection="row"

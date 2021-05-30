@@ -21,7 +21,7 @@ public interface UserService {
     Call<LoginResponse> login(@Body UserRequest product);
 
     @POST("public/user")
-    Call<User> signin(@Body User user);
+    Call<LoginResponse> signin(@Body User user);
 
     @PUT("user/{id}")
     Call<User> update(@Path("id") int id, @Body User user);

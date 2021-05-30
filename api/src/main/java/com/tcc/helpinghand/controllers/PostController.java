@@ -1,5 +1,6 @@
 package com.tcc.helpinghand.controllers;
 
+import com.tcc.helpinghand.controllers.requests.PostRequest;
 import com.tcc.helpinghand.models.Comment;
 import com.tcc.helpinghand.models.Post;
 import com.tcc.helpinghand.security.CurrentUser;
@@ -28,8 +29,10 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Post post(@AuthenticationPrincipal CurrentUser currentUser, @RequestBody Post post) {
-
+    public Post post(
+            @AuthenticationPrincipal CurrentUser currentUser,
+            @RequestBody PostRequest post
+    ) {
         return postService.post(currentUser.getUser(), post);
     }
 
@@ -47,7 +50,6 @@ public class PostController {
             @RequestBody Comment comment,
             @PathVariable("id") int idPost
     ) {
-
         Post post = new Post();
         post.setIdPost(idPost);
         comment.setPost(post);

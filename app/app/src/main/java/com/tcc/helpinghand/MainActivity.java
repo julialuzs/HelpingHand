@@ -27,29 +27,28 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity  {
 
     private BottomNavigationView bottomNavigation;
-    public CircularProgressIndicator progressCircle;
-
-    public List<Lesson> lessons;
-    public LessonService lessonService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
+
         this.initializeComponents();
         this.setPointsBar();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = new HomeFragment();
-        transaction.replace(R.id.fl_fragment_container, fragment);
-        transaction.commit();
-
+        this.setMainFragmentContainer();
         this.setNavBarClickListener();
     }
 
     private void initializeComponents() {
         this.bottomNavigation = (BottomNavigationView) findViewById(R.id.bnv_nav_bar);
+    }
+
+    public void setMainFragmentContainer() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = new HomeFragment();
+        transaction.replace(R.id.fl_fragment_container, fragment);
+        transaction.commit();
     }
 
     public void setPointsBar() {
@@ -85,6 +84,5 @@ public class MainActivity extends AppCompatActivity  {
             return true;
         });
     }
-
 
 }

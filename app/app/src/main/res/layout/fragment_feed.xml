@@ -22,7 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:tint="#FFFFFF"
+        android:backgroundTint="@color/primary_blue"
+        android:layout_margin="@dimen/general_space"
+        app:tint="#fff"
         app:srcCompat="@drawable/ic_add"/>
 
 </FrameLayout>

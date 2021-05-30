@@ -22,14 +22,14 @@ import com.tcc.helpinghand.services.RetrofitConfig;
 import com.tcc.helpinghand.services.TokenService;
 import com.tcc.helpinghand.services.UserService;
 
+import static com.tcc.helpinghand.constants.RequestMessages.SERVER_ERROR;
+
 public class PointsFragment extends Fragment {
 
     private TextView tvLevel;
     private TextView tvPoints;
-    public UserService userService;
 
     public PointsFragment() {
-
     }
 
     public static PointsFragment newInstance() {
@@ -68,6 +68,7 @@ public class PointsFragment extends Fragment {
     private void getData() {
         RetrofitConfig retrofitConfig = new RetrofitConfig();
         UserService userService = retrofitConfig.getUserService();
+
         String token = TokenService.getToken(
                 getActivity(), getString(R.string.user_token_key)
         );
@@ -81,13 +82,12 @@ public class PointsFragment extends Fragment {
                     User user = response.body();
                     tvLevel.setText(String.valueOf(user.getLevel().getDescription()));
                     tvPoints.setText(String.valueOf(user.getPoints()));
-
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getContext(), "Erro ao carregar dados." , Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), SERVER_ERROR , Toast.LENGTH_LONG).show();
             }
         });
 

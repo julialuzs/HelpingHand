@@ -5,10 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,12 +18,10 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.tcc.helpinghand.adapter.FeedListAdapter;
-import com.tcc.helpinghand.models.Lesson;
+import com.tcc.helpinghand.adapters.FeedListAdapter;
 import com.tcc.helpinghand.models.Post;
 import com.tcc.helpinghand.services.PostService;
 import com.tcc.helpinghand.services.RetrofitConfig;
-import com.tcc.helpinghand.services.TokenService;
 
 import java.util.List;
 

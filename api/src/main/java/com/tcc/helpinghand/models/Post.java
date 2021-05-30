@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.File;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,6 +21,8 @@ public class Post {
     private File attachment;
 
     private String tag;
+
+    private LocalDateTime createdDate;
 
     @ManyToOne
     @JoinColumn(name = "idAuthor")
