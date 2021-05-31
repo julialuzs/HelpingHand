@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.tcc.helpinghand.enums.Difficulty;
 import com.tcc.helpinghand.models.Lesson;
 import com.tcc.helpinghand.services.LessonService;
@@ -31,17 +32,20 @@ public class HomeFragment extends Fragment {
     public LessonService lessonService;
     List<Lesson> lessons;
 
+    CircularProgressIndicator progressCircle;
+
     public HomeFragment() { }
 
     private void loadLessons() {
         String token = TokenService.getToken(getContext(), getString(R.string.user_token_key));
-
+        progressCircle.show();
         this.lessonService.getAllByCurrentUser(token).enqueue(new Callback<List<Lesson>>() {
             @Override
             public void onResponse(Call<List<Lesson>> call, Response<List<Lesson>> response) {
                 if (response.isSuccessful()) {
                     lessons = response.body();
                     openLessonsGroupFragment();
+                    progressCircle.hide();
                 } else {
                     Toast.makeText(getContext(), "Erro de conexão", Toast.LENGTH_SHORT).show();
                 }
@@ -96,6 +100,7 @@ public class HomeFragment extends Fragment {
     private void initializeComponents() {
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
+        progressCircle = getView().findViewById(R.id.cpi_loading);
     }
 
 }

@@ -3,6 +3,7 @@ package com.tcc.helpinghand.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -31,4 +32,6 @@ public class UserQuestion {
 
     @Column(nullable = false)
     private boolean isCorrect;
+
+    private LocalDateTime dateAnswered;
 }

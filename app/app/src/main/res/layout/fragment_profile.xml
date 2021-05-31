@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
-    <TextView
-        android:id="@+id/tv_user_name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_user_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
 
-</FrameLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
+            app:expandedTitleMarginBottom="28dp"
+            app:expandedTitleMarginStart="72dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mt_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/app_name"
+                app:drawableStartCompat="@drawable/user"
+                android:elevation="0dp" />
+
+<!--            app:drawableStartCompat="@drawable/user"-->
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="?android:listDivider"
+        android:dividerPadding="16dp"
+        android:padding="@dimen/general_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <TextView
+            android:id="@+id/tv_profile_level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/general_space"
+            android:text="Nível"
+            app:drawableStartCompat="@drawable/ic_star_black_24dp"
+            android:drawableTint="@color/accent_orange"
+            android:drawablePadding="6dp"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/general_space"
+            android:paddingStart="30dp"
+            android:text="Pontos"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/general_space"
+            android:text="Sair"
+            app:drawableStartCompat="@drawable/ic_logout"
+            android:drawablePadding="6dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

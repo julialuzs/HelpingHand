@@ -11,6 +11,7 @@ import com.tcc.helpinghand.repositories.UserQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -58,7 +59,7 @@ public class QuestionService {
         } else {
             response.setPointsGained(0);
         }
-
+        userQuestion.setDateAnswered(LocalDateTime.now());
         userQuestionRepository.save(userQuestion);
         // TODO: refactor
         if (user.getLevel() != null) {

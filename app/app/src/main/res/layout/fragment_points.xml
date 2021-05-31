@@ -47,7 +47,8 @@
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:drawableEndCompat="@drawable/star"
+        app:drawableStartCompat="@drawable/ic_star_black_24dp"
+        android:drawableTint="@color/accent_orange"
         tools:text="0" />
 
 </com.google.android.flexbox.FlexboxLayout>

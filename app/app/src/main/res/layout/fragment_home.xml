@@ -38,6 +38,13 @@
                 android:textStyle="bold"
                 app:layout_alignSelf="center" />
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/cpi_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+
             <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/fl_lesson_group"
                 android:layout_width="match_parent"

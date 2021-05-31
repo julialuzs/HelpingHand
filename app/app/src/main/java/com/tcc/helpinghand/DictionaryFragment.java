@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tcc.helpinghand.services.DictionaryService;
 import com.tcc.helpinghand.services.RetrofitConfig;
@@ -32,6 +33,8 @@ public class DictionaryFragment extends Fragment {
 
     private ListView lvSigns;
     private TextInputLayout tilSearchBar;
+
+    CircularProgressIndicator progressCircle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,13 +53,14 @@ public class DictionaryFragment extends Fragment {
 
         initializeComponents();
 
+        progressCircle.show();
         dictionaryService.getDictionary().enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     signs = response.body();
                     setSignsOnList();
-
+                    progressCircle.hide();
                 }
             }
 
@@ -120,5 +124,6 @@ public class DictionaryFragment extends Fragment {
         View view = getView();
         lvSigns = view.findViewById(R.id.lv_signs);
         tilSearchBar = view.findViewById(R.id.til_search_bar);
+        progressCircle = view.findViewById(R.id.cpi_loading);
     }
 }
