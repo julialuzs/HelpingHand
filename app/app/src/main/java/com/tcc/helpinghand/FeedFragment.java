@@ -76,6 +76,7 @@ public class FeedFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
+                t.printStackTrace();
                 Toast.makeText(getActivity(),
                         "Ocorreu um problema ao carregar os dados do servidor. Tente novamente mais tarde.",
                         Toast.LENGTH_SHORT

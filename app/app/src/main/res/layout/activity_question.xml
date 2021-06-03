@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/tv_question_number"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="70dp"
         android:padding="@dimen/general_space"
         android:textColor="@color/primary_blue"
         android:textSize="24sp"
@@ -23,11 +23,12 @@
     <FrameLayout
         android:id="@+id/fl_unity_fragment"
         android:layout_width="0dp"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
         android:padding="@dimen/general_space"
+        app:layout_constraintBottom_toTopOf="@+id/tv_question_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_question_number" >
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_number">
 
     </FrameLayout>
 
@@ -36,30 +37,75 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:padding="@dimen/general_space"
         android:textColor="#050000"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/cl_answer_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fl_unity_fragment" />
 
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/fl_answer_options"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_answer_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:padding="@dimen/general_space"
-        app:alignContent="center"
-        app:alignItems="center"
-        app:flexDirection="row"
-        app:flexWrap="wrap"
-        app:justifyContent="space_evenly"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_question_description">
 
-    </com.google.android.flexbox.FlexboxLayout>
+        <Button
+            android:id="@+id/bt_option_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/general_space"
+            android:text="Opção 1"
+            app:layout_constraintEnd_toStartOf="@+id/bt_option_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bt_option_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Opção 2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bt_option_1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/general_space"
+        android:paddingEnd="@dimen/general_space"
+        android:paddingBottom="@dimen/general_space"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_answer_options">
+
+        <Button
+            android:id="@+id/bt_option_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/general_space"
+            android:text="Opção 3"
+            app:layout_constraintEnd_toStartOf="@+id/bt_option_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bt_option_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Opção 4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bt_option_3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

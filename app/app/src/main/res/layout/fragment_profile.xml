@@ -4,44 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_grey"
     tools:context=".ProfileFragment">
-
-<!--    <TextView-->
-<!--        android:id="@+id/tv_user_name"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="128dp"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mt_profile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
-            app:expandedTitleMarginBottom="28dp"
-            app:expandedTitleMarginStart="72dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/mt_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/app_name"
-                app:drawableStartCompat="@drawable/user"
-                android:elevation="0dp" />
-
-<!--            app:drawableStartCompat="@drawable/user"-->
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+            android:layout_height="wrap_content"
+            app:title="@string/app_name"
+            app:navigationIcon="@drawable/user"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:elevation="0dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/ll_profile_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -57,10 +44,13 @@
             android:id="@+id/tv_profile_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/general_space"
+            android:layout_marginEnd="@dimen/general_space"
+            android:layout_marginStart="@dimen/general_space"
+            android:layout_marginBottom="@dimen/general_space"
             android:text="Nível"
+            android:textColor="#000"
             app:drawableStartCompat="@drawable/ic_star_black_24dp"
-            android:drawableTint="@color/accent_orange"
+            app:drawableTint="@color/accent_orange"
             android:drawablePadding="6dp"
             android:textSize="24sp" />
 
@@ -70,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/general_space"
             android:paddingStart="30dp"
+            android:textColor="#000"
             android:text="Pontos"
             android:textSize="16sp" />
 
@@ -77,11 +68,194 @@
             android:id="@+id/tv_profile_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/general_space"
+            android:layout_marginEnd="@dimen/general_space"
+            android:layout_marginStart="@dimen/general_space"
+            android:layout_marginTop="@dimen/general_space"
+            android:textColor="#000"
             android:text="Sair"
             app:drawableStartCompat="@drawable/ic_logout"
             android:drawablePadding="6dp"
             android:textSize="16sp"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_selos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="30dp"
+        android:paddingEnd="@dimen/general_space"
+        android:text="Selos alcançados"
+        android:drawablePadding="6dp"
+        android:textSize="20sp"
+        android:textColor="#000"
+        app:layout_constraintTop_toBottomOf="@+id/ll_profile_items"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_selos">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="100dp"
+            app:flexDirection="row"
+            app:alignItems="center"
+            app:justifyContent="center"
+            app:flexWrap="wrap"
+            >
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:flexWrap="wrap">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/roundbtn"
+                    android:padding="2dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/ic_iniciante_atento" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iniciante Atento"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_alignSelf="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verifique a tradução de 30 palavras diferentes"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="12sp"
+                    app:layout_alignSelf="center" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:flexWrap="wrap">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/roundbtn"
+                    android:padding="2dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/ic_pesquisador_entusiasta" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pesquisador Entusiasta"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_alignSelf="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acerte 5 questões seguidas"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="12sp"
+                    app:layout_alignSelf="center" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:flexWrap="wrap">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/roundbtn"
+                    android:padding="2dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/ic_pupilo_incansavel" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pupilo Incansável"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_alignSelf="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ganhar 100 pontos em um dia"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="12sp"
+                    app:layout_alignSelf="center" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:flexWrap="wrap">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/roundbtn"
+                    android:padding="2dp"
+                    app:layout_flexBasisPercent="50%"
+                    app:srcCompat="@drawable/ic_borboleta_social" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Borboleta Social"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_alignSelf="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Faça 5 postagens de interação"
+                    android:textAlignment="center"
+                    android:textColor="#050000"
+                    android:textSize="12sp"
+                    app:layout_alignSelf="center" />
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

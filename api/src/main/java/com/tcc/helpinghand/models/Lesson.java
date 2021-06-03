@@ -18,16 +18,13 @@ public class Lesson {
 
     private long points;
 
-    //    @Enumerated(EnumType.STRING)
     @Column(length = 15, nullable = false)
     @Convert(converter = DifficultyConverter.class)
     private Difficulty difficulty;
 
     private String module;
 
-    //    @Enumerated(EnumType.STRING)
-    @Column(length = 15, nullable = false)
-    @Convert(converter = StatusConverter.class)
+    @Transient
     private Status status;
 
     private String imageName;

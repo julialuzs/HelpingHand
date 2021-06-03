@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,7 +42,12 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
     private TextView tvDescription;
     private TextView tvQuestionNumber;
-    private FlexboxLayout flAnswerOptions;
+    private ConstraintLayout clAnswerOptions;
+
+    private Button btOption1;
+    private Button btOption2;
+    private Button btOption3;
+    private Button btOption4;
 
     public LessonService lessonService;
 
@@ -129,30 +136,18 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
     public void setButtonsOnScreen(Question question) {
         String[] options = question.getAnswerOptions().split(";");
-        flAnswerOptions.removeAllViews();
 
-        for (String option : options) {
+        Button[] buttons = {this.btOption1, this.btOption2, this.btOption3, this.btOption4};
 
-            Button button = new Button(this);
-            button.setTextColor(ContextCompat.getColor(this, R.color.primary_blue));
-            button.setPadding(8, 8, 8, 8);
-            button.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.background_grey), PorterDuff.Mode.MULTIPLY
-            );
-            button.setText(option);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-            button.setLayoutParams(params);
-
+        int index = 0;
+        for (Button button : buttons) {
+            button.setText(options[index++]);
             button.setOnClickListener(view -> {
                 String text = button.getText().toString();
                 answerQuestion(text);
             });
-
-            flAnswerOptions.addView(button);
         }
+
     }
 
     private void answerQuestion(String text) {
@@ -201,10 +196,15 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     private void initializeComponents() {
         this.tvQuestionNumber = findViewById(R.id.tv_question_number);
         this.tvDescription = findViewById(R.id.tv_question_description);
-        this.flAnswerOptions = findViewById(R.id.fl_answer_options);
+        this.clAnswerOptions = findViewById(R.id.cl_answer_options);
 
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();
+
+        this.btOption1 = findViewById(R.id.bt_option_1);
+        this.btOption2 = findViewById(R.id.bt_option_2);
+        this.btOption3 = findViewById(R.id.bt_option_3);
+        this.btOption4 = findViewById(R.id.bt_option_4);
     }
 
     @Override

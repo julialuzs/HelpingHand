@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.tcc.helpinghand.R;
 import com.tcc.helpinghand.models.Post;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FeedListAdapter extends ArrayAdapter<Post> {
@@ -30,9 +32,15 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         TextView tvTitle = convertView.findViewById(R.id.tv_post_title);
         TextView tvLike = convertView.findViewById(R.id.tv_post_like);
         TextView tvText = convertView.findViewById(R.id.tv_post_text);
+        TextView tvDate = convertView.findViewById(R.id.tv_post_date);
         tvUserName.setText(quote.getAuthor().getName());
         tvTitle.setText(quote.getTitle());
         tvText.setText(quote.getBody());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y h:m");
+        LocalDateTime dateTime = LocalDateTime.parse(quote.getCreatedDate());
+        String date = dateTime.format(formatter);
+        tvDate.setText(date);
 
         return convertView;
     }
