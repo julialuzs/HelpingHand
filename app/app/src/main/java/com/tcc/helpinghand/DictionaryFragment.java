@@ -1,5 +1,6 @@
 package com.tcc.helpinghand;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,6 +27,8 @@ import com.tcc.helpinghand.services.DictionaryService;
 import com.tcc.helpinghand.services.RetrofitConfig;
 
 import java.util.List;
+
+import static com.tcc.helpinghand.constants.Keys.SIGN_TO_TRANSLATE;
 
 public class DictionaryFragment extends Fragment {
 
@@ -59,8 +63,10 @@ public class DictionaryFragment extends Fragment {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     signs = response.body();
-                    setSignsOnList();
-                    progressCircle.hide();
+                    if (getContext() != null) {
+                        setSignsOnList();
+                        progressCircle.hide();
+                    }
                 }
             }
 
@@ -72,28 +78,17 @@ public class DictionaryFragment extends Fragment {
     }
 
     void setSignsOnList() {
-        ArrayAdapter adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_list_item_1,
                 signs
         );
         lvSigns.setAdapter(adapter);
         lvSigns.setOnItemClickListener((adapterView, view, i, l) -> {
-            //TODO: show vlibras animation
-            //TODO: fix when pressing back button
             String signToTranslate = signs.get(i);
-
-            FragmentTransaction transaction = getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction();
-
-            UnityPlayerFragment fragment = UnityPlayerFragment.newInstance(
-                    signToTranslate, false
-            );
-
-            transaction.replace(R.id.fl_fragment_container, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            Intent intent = new Intent(getActivity(), DictionaryActivity.class);
+            intent.putExtra(SIGN_TO_TRANSLATE, signToTranslate);
+            startActivity(intent);
         });
         setSearchBarListener(adapter);
     }

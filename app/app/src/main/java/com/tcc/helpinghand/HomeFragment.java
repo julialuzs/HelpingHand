@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         List<Lesson> intermediateLessons = filterByDifficulty(Difficulty.INTERMEDIATE);
         List<Lesson> advancedLessons = filterByDifficulty(Difficulty.ADVANCED);
 
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
 
         Fragment fragmentBasic = LessonGroupFragment.newInstance(basicLessons);
         transaction.add(R.id.fl_lesson_group, fragmentBasic);

@@ -32,14 +32,6 @@ import static com.tcc.helpinghand.constants.Keys.POST;
 
 public class FeedListAdapter extends ArrayAdapter<Post> {
 
-    private TextView tvUserName;
-    private TextView tvTitle;
-    private TextView tvLike;
-    private TextView tvComments;
-    private TextView tvText;
-    private TextView tvDate;
-
-    private Post post;
 
     public PostService service;
 
@@ -50,7 +42,7 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        post = getItem(position);
+        Post post = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.post, parent, false);
         }
@@ -58,12 +50,12 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         RetrofitConfig retrofit = new RetrofitConfig();
         service = retrofit.getPostService();
 
-        tvUserName = convertView.findViewById(R.id.tv_post_username);
-        tvTitle = convertView.findViewById(R.id.tv_post_title);
-        tvLike = convertView.findViewById(R.id.tv_post_like);
-        tvComments = convertView.findViewById(R.id.tv_post_comment);
-        tvText = convertView.findViewById(R.id.tv_post_text);
-        tvDate = convertView.findViewById(R.id.tv_post_date);
+        TextView tvUserName = convertView.findViewById(R.id.tv_post_username);
+        TextView tvTitle = convertView.findViewById(R.id.tv_post_title);
+        TextView tvLike = convertView.findViewById(R.id.tv_post_like);
+        TextView tvComments = convertView.findViewById(R.id.tv_post_comment);
+        TextView tvText = convertView.findViewById(R.id.tv_post_text);
+        TextView tvDate = convertView.findViewById(R.id.tv_post_date);
 
         tvUserName.setText(post.getAuthor().getName());
         tvTitle.setText(post.getTitle());
@@ -71,10 +63,12 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
 
         if (post.isLikedByMe()) {
             setLikeButton(tvLike);
+        } else {
+            setDislikeButton(tvLike);
         }
 
-        setLikeButtonClickListener();
-        setCommentsButtonClickListener();
+        setLikeButtonClickListener(tvLike, post);
+        setCommentsButtonClickListener(tvComments, post);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/y h:m");
         LocalDateTime dateTime = LocalDateTime.parse(post.getCreatedDate());
@@ -84,7 +78,7 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         return convertView;
     }
 
-    private void setCommentsButtonClickListener() {
+    private void setCommentsButtonClickListener(TextView tvComments, Post post) {
         tvComments.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), CommentsActivity.class);
             intent.putExtra(POST, post);
@@ -92,12 +86,16 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
         });
     }
 
-    private void setLikeButtonClickListener() {
+    private void setLikeButtonClickListener(TextView tvLike, Post post) {
         tvLike.setOnClickListener(view -> {
             if (post.isLikedByMe()) {
+                post.setLikedByMe(false);
                 setDislikeButton(tvLike);
+                tvLike.setText("Descurtir");
             } else {
+                post.setLikedByMe(true);
                 setLikeButton(tvLike);
+                tvLike.setText("Curtir");
             }
 
             String token = TokenService.getToken(getContext());
@@ -105,8 +103,8 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
             service.like(token, post.getIdPost()).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext().getApplicationContext(), "CURTIU", Toast.LENGTH_LONG).show();
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getContext().getApplicationContext(), "Erro", Toast.LENGTH_LONG).show();
                     }
                 }
 

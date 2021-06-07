@@ -23,6 +23,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.tcc.helpinghand.constants.Keys.FRAGMENT_DICTIONARY;
+import static com.tcc.helpinghand.constants.Keys.FRAGMENT_HOME;
+import static com.tcc.helpinghand.constants.Keys.FRAGMENT_TO_REDIRECT;
+import static com.tcc.helpinghand.constants.Keys.SIGN_TO_TRANSLATE;
+
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -34,14 +39,11 @@ public class MainActivity extends AppCompatActivity  {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
-        this.initializeComponents();
-        this.setFragments();
-        this.setNavBarClickListener();
     }
 
     public void setFragments() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Fragment home = new HomeFragment();
+        Fragment home = getFragment(bottomNavigation.getSelectedItemId());
         transaction.replace(R.id.fl_fragment_container, home);
 
         Fragment pointsBar = PointsFragment.newInstance();
@@ -54,27 +56,35 @@ public class MainActivity extends AppCompatActivity  {
         bottomNavigation.setOnNavigationItemSelectedListener(item -> {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             Fragment fragment = new HomeFragment();
-
-            switch (item.getItemId()) {
-                case R.id.nav_item_home:
-                    fragment = new HomeFragment();
-                    break;
-                case R.id.nav_item_dictionary:
-                    fragment = new DictionaryFragment();
-                    break;
-                case R.id.nav_item_feed:
-                    fragment = new FeedFragment();
-                    break;
-                case R.id.nav_item_person:
-                    fragment = new ProfileFragment();
-                    break;
-            }
+            fragment = getFragment(item.getItemId());
 
             transaction.replace(R.id.fl_fragment_container, fragment);
-            transaction.addToBackStack(null);
+//            transaction.addToBackStack(null);
             transaction.commit();
             return true;
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.initializeComponents();
+        this.setFragments();
+        this.setNavBarClickListener();
+    }
+
+    Fragment getFragment(int id) {
+        switch (id) {
+            case R.id.nav_item_home:
+                return new HomeFragment();
+            case R.id.nav_item_dictionary:
+                return new DictionaryFragment();
+            case R.id.nav_item_feed:
+                return new FeedFragment();
+            case R.id.nav_item_person:
+                return new ProfileFragment();
+        }
+        return new HomeFragment();
     }
 
     private void initializeComponents() {

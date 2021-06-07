@@ -29,7 +29,7 @@ public interface PostService {
     Call<Comment> comment(
             @Header("Authorization") String token,
             @Body Comment comment,
-            @Path("postId") int postId
+            @Path("postId") long postId
     );
 
     @POST("post/{postId}/like")

@@ -51,8 +51,7 @@ public class LessonGroupFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        FragmentTransaction transaction = getActivity()
-                .getSupportFragmentManager()
+        FragmentTransaction transaction = getChildFragmentManager()
                 .beginTransaction();
 
         for (Lesson lesson: lessonsGroup) {

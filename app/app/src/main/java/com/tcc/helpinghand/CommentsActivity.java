@@ -1,15 +1,18 @@
 package com.tcc.helpinghand;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.textfield.TextInputLayout;
 import com.tcc.helpinghand.adapters.CommentListAdapter;
 import com.tcc.helpinghand.models.Comment;
 import com.tcc.helpinghand.models.Post;
 import com.tcc.helpinghand.services.PostService;
 import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
 
 import java.util.List;
 
@@ -23,6 +26,9 @@ import static com.tcc.helpinghand.constants.Keys.POST;
 public class CommentsActivity extends AppCompatActivity {
 
     private PostService postService;
+
+    private Button btAddComment;
+    private TextInputLayout etComment;
     private ListView listView;
     private CircularProgressIndicator progressCircle;
 
@@ -37,7 +43,36 @@ public class CommentsActivity extends AppCompatActivity {
         post = (Post) getIntent().getExtras().getSerializable(POST);
 
         this.initializeComponents();
-        this.loadComments();
+        loadComments();
+        this.setAddCommentClickListener();
+    }
+
+    private void setAddCommentClickListener() {
+        this.btAddComment.setOnClickListener(view -> {
+            String commentContent = this.etComment.getEditText().getText().toString();
+            String token = TokenService.getToken(getApplicationContext());
+
+            Comment comment = new Comment();
+            comment.setContent(commentContent);
+
+            Call<Comment> call = this.postService.comment(token, comment, post.getIdPost());
+
+            call.enqueue(new Callback<Comment>() {
+                @Override
+                public void onResponse(Call<Comment> call, Response<Comment> response) {
+                    if (response.isSuccessful()) {
+                        loadComments();
+                        etComment.getEditText().setText(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Comment> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
+        });
     }
 
     void setCommentsInList(List<Comment> comments) {
@@ -45,9 +80,8 @@ public class CommentsActivity extends AppCompatActivity {
         this.listView.setAdapter(adapter);
     }
 
-    private void loadComments() {
+    void loadComments() {
         progressCircle.show();
-//        String token = TokenService.getToken(getApplicationContext());
 
         this.postService.getComments(post.getIdPost()).enqueue(new Callback<List<Comment>>() {
             @Override
@@ -77,6 +111,8 @@ public class CommentsActivity extends AppCompatActivity {
         this.postService = config.getPostService();
 
         this.listView = findViewById(R.id.lv_comments);
-        progressCircle = findViewById(R.id.cpi_loading);
+        this.btAddComment = findViewById(R.id.bt_add_comment);
+        this.etComment = findViewById(R.id.til_comment);
+        this.progressCircle = findViewById(R.id.cpi_loading);
     }
 }
