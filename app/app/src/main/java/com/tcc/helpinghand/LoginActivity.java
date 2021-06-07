@@ -82,7 +82,6 @@ public class LoginActivity extends AppCompatActivity  implements Validator.Valid
     public void registerToken(String token) {
         TokenService.registerToken(
                 getApplicationContext(),
-                getString(R.string.user_token_key),
                 token
         );
     }

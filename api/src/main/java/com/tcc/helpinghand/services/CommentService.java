@@ -7,17 +7,19 @@ import com.tcc.helpinghand.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class CommentService {
 
     @Autowired
-    public CommentRepository repository;
+    private CommentRepository repository;
 
     public Comment comment(User user, Comment comment) {
         comment.setUser(user);
-        return repository.save(comment);
+        comment.setCreatedDate(LocalDateTime.now());
+        return this.repository.save(comment);
     }
 
     public void deleteComment(Comment comment) {
@@ -25,6 +27,6 @@ public class CommentService {
     }
 
     public List<Comment> findAllByPost(Post post) {
-        return repository.findAllByPost(post);
+        return this.repository.findAllByPost(post);
     }
 }

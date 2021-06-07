@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
         this.initializeComponents();
 
         String token = TokenService.getToken(
-                getActivity(), getString(R.string.user_token_key)
+                getActivity()
         );
 
         Call<User> call = userService.getCurrentUser(token);
@@ -73,8 +73,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void logout() {
-        // TODO: use constant instead of string resource
-        TokenService.removeToken(getActivity().getApplicationContext(), getString(R.string.user_token_key));
+        TokenService.removeToken(getActivity().getApplicationContext());
         Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }

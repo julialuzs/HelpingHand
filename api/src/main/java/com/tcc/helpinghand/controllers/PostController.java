@@ -38,9 +38,19 @@ public class PostController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Post> getAllPosts(@RequestParam(required = false) String tag) {
+    public List<Post> getAllPosts(
+            @AuthenticationPrincipal CurrentUser currentUser,
+            @RequestParam(required = false) String tag
+    ) {
+        return postService.getPosts(tag, currentUser.getUser());
+    }
 
-        return postService.getPosts(tag);
+    @GetMapping("/{postId}/comments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Comment> getCommentsByPost(@PathVariable("postId") long postId) {
+        Post post = new Post();
+        post.setIdPost(postId);
+        return commentService.findAllByPost(post);
     }
 
     @PostMapping("/{id}/comment")

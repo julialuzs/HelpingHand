@@ -22,6 +22,7 @@ import com.tcc.helpinghand.adapters.FeedListAdapter;
 import com.tcc.helpinghand.models.Post;
 import com.tcc.helpinghand.services.PostService;
 import com.tcc.helpinghand.services.RetrofitConfig;
+import com.tcc.helpinghand.services.TokenService;
 
 import java.util.List;
 
@@ -62,7 +63,9 @@ public class FeedFragment extends Fragment {
     private void loadPosts() {
         progressCircle.show();
 
-        this.postService.getPosts(null).enqueue(new Callback<List<Post>>() {
+        String token = TokenService.getToken(getActivity().getApplicationContext());
+
+        this.postService.getPosts(token, null).enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful()) {

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.File;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -26,4 +27,5 @@ public class Comment {
 
     private File attachment;
 
+    private LocalDateTime createdDate;
 }

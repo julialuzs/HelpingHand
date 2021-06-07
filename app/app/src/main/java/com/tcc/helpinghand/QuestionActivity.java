@@ -151,7 +151,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     }
 
     private void answerQuestion(String text) {
-        String token = TokenService.getToken(QuestionActivity.this, getString(R.string.user_token_key));
+        String token = TokenService.getToken(QuestionActivity.this);
 
         Call<QuestionResponse> call = lessonService.answerQuestion(
                 token,

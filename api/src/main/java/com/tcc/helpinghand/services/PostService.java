@@ -1,8 +1,10 @@
 package com.tcc.helpinghand.services;
 
 import com.tcc.helpinghand.controllers.requests.PostRequest;
+import com.tcc.helpinghand.models.Like;
 import com.tcc.helpinghand.models.Post;
 import com.tcc.helpinghand.models.User;
+import com.tcc.helpinghand.repositories.LikeRepository;
 import com.tcc.helpinghand.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,10 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    public PostRepository repository;
+    public PostRepository postRepository;
+
+    @Autowired
+    public LikeRepository likeRepository;
 
     public Post post(User user, PostRequest request) {
         Post post = new Post();
@@ -25,13 +30,26 @@ public class PostService {
         post.setCreatedDate(LocalDateTime.now());
         post.setAuthor(user);
 
-        return repository.save(post);
+        return postRepository.save(post);
     }
 
-    public List<Post> getPosts(String tag) {
-        if (tag != null) {
-            return repository.findByTag(tag);
+    public List<Post> getPosts(String tag, User user) {
+        List<Post> posts;
+        posts = tag != null ?
+                postRepository.findByTag(tag) :
+                postRepository.findAll();
+
+        for (Post post : posts) {
+
+           List<Like> likes = likeRepository.findAllByPost(post);
+           post.setLikesCount(likes.size());
+
+           boolean isLikedByMe = likes
+                   .stream()
+                   .anyMatch(like -> like.getUser().getIdUser() == user.getIdUser());
+
+           post.setLikedByMe(isLikedByMe);
         }
-        return repository.findAll();
+        return posts;
     }
 }

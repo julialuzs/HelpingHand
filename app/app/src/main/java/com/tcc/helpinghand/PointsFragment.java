@@ -70,7 +70,7 @@ public class PointsFragment extends Fragment {
         UserService userService = retrofitConfig.getUserService();
 
         String token = TokenService.getToken(
-                getActivity(), getString(R.string.user_token_key)
+                getActivity()
         );
 
         Call<User> call = userService.getCurrentUser(token);

@@ -17,10 +17,13 @@ import retrofit2.http.Query;
 public interface PostService {
 
     @GET("post")
-    Call<List<Post>> getPosts(@Query("tag") String tag);
+    Call<List<Post>> getPosts(@Header("Authorization") String token, @Query("tag") String tag);
 
     @POST("post")
     Call<Post> post(@Header("Authorization") String token, @Body PostRequest post);
+
+    @GET("post/{postId}/comments")
+    Call<List<Comment>> getComments(@Path("postId") long postId);
 
     @POST("post/{postId}/comment")
     Call<Comment> comment(
@@ -32,7 +35,7 @@ public interface PostService {
     @POST("post/{postId}/like")
     Call<Void> like(
             @Header("Authorization") String token,
-            @Path("postId") int postId
+            @Path("postId") long postId
     );
 
 }

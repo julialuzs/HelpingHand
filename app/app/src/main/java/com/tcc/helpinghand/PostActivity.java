@@ -78,6 +78,6 @@ public class PostActivity extends AppCompatActivity {
 
         RetrofitConfig retrofit = new RetrofitConfig();
         postService = retrofit.getPostService();
-        token = TokenService.getToken(getApplicationContext(), getString(R.string.user_token_key));
+        token = TokenService.getToken(getApplicationContext());
     }
 }

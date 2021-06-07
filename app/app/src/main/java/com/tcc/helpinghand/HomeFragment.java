@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() { }
 
     private void loadLessons() {
-        String token = TokenService.getToken(getContext(), getString(R.string.user_token_key));
+        String token = TokenService.getToken(getContext());
         progressCircle.show();
         this.lessonService.getAllByCurrentUser(token).enqueue(new Callback<List<Lesson>>() {
             @Override

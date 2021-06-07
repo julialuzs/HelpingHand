@@ -2,6 +2,7 @@ package com.tcc.helpinghand.models;
 
 import java.io.File;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -17,5 +18,7 @@ public class Comment implements Serializable {
     private String content;
 
     private File attachment;
+
+    private String createdDate;
 
 }

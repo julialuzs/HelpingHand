@@ -28,4 +28,9 @@ public class Post {
     @JoinColumn(name = "idAuthor")
     private User author;
 
+    @Transient
+    private int likesCount;
+
+    @Transient
+    private boolean likedByMe;
 }
