@@ -9,7 +9,7 @@ insert into lesson (difficulty, module, points, image_name) values ('Intermediá
 insert into lesson (difficulty, module, points, image_name) values ('Intermediário', 'Sentimentos', '50', 'notes');
 
 insert into lesson (difficulty, module, points, image_name) values ('Avançado', 'Verbos', '60', 'books');
-insert into lesson (difficulty, module, points, image_name) values ('Avançado', 'Pronomes', '60', 'radio_buttom');
+insert into lesson (difficulty, module, points, image_name) values ('Avançado', 'Pronomes', '60', 'radio_button');
 insert into lesson (difficulty, module, points, image_name) values ('Avançado', 'Adjetivos', '60', 'apps');
 insert into lesson (difficulty, module, points, image_name) values ('Avançado', 'Profissões', '60', 'award');
 

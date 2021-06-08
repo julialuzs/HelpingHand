@@ -16,7 +16,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="1.0"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                 android:id="@+id/fl_lesson_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="100dp"
+
                 app:alignItems="center"
                 app:flexDirection="column"
                 app:flexWrap="wrap">
