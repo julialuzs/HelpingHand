@@ -57,7 +57,9 @@ public class UnityPlayerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.disableSubs();
+        if (disableSubs) {
+            this.disableSubs();
+        }
     }
 
     @Override
@@ -70,7 +72,6 @@ public class UnityPlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mUnityPlayer.pause();
-        this.disableSubs();
     }
 
     @Override
@@ -86,10 +87,6 @@ public class UnityPlayerFragment extends Fragment {
     }
 
     public void translate() {
-
-        new android.os.Handler(Looper.getMainLooper()).postDelayed(
-            () -> {
-                UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
-            }, 500);
+        UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
     }
 }

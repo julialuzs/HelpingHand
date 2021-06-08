@@ -2,14 +2,10 @@ package com.tcc.helpinghand;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.flexbox.FlexboxLayout;
 import com.tcc.helpinghand.dialogs.MessageDialog;
 import com.tcc.helpinghand.models.Question;
 import com.tcc.helpinghand.models.requests.AnswerQuestionRequest;
@@ -24,7 +20,6 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import retrofit2.Call;
@@ -38,25 +33,22 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     private static final String LESSON_CONCLUDED = "Lição concluída";
     private static final String LESSON_ANSWERED = "Lição respondida";
 
+    public LessonService lessonService;
+    public long lessonId;
+
+    public List<Question> questions;
+    public Question currentQuestion;
+    private QuestionResponse currentQuestionResponse;
+    public int currentQuestionIndex;
+
     UnityPlayerFragment fragment;
 
     private TextView tvDescription;
     private TextView tvQuestionNumber;
-    private ConstraintLayout clAnswerOptions;
-
     private Button btOption1;
     private Button btOption2;
     private Button btOption3;
     private Button btOption4;
-
-    public LessonService lessonService;
-
-    public long lessonId;
-    public List<Question> questions;
-    public Question currentQuestion;
-    public int currentQuestionIndex;
-
-    private QuestionResponse currentQuestionResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +189,6 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
     private void initializeComponents() {
         this.tvQuestionNumber = findViewById(R.id.tv_question_number);
         this.tvDescription = findViewById(R.id.tv_question_description);
-        this.clAnswerOptions = findViewById(R.id.cl_answer_options);
 
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();

@@ -1,17 +1,10 @@
 package com.tcc.helpinghand;
 
-import androidx.activity.OnBackPressedCallback;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.tcc.helpinghand.models.Post;
-
-import static com.tcc.helpinghand.constants.Keys.FRAGMENT_DICTIONARY;
-import static com.tcc.helpinghand.constants.Keys.FRAGMENT_TO_REDIRECT;
-import static com.tcc.helpinghand.constants.Keys.POST;
 import static com.tcc.helpinghand.constants.Keys.SIGN_TO_TRANSLATE;
 
 public class DictionaryActivity extends AppCompatActivity {
