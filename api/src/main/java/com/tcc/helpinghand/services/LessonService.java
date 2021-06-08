@@ -30,19 +30,21 @@ public class LessonService {
 
     public List<Lesson> getAllByUser(User user) {
         List<LessonProjection> projections = repository.getAllByCurrentUser(user.getIdUser());
-        Difficulty difficulty = Difficulty.ADVANCED;
+        Difficulty difficultyToVerify = Difficulty.BASIC;
+        int rightAnswers = 0;
 
-        if (user.getPoints() <= 999) {
-            difficulty = Difficulty.BASIC;
-        } else if (user.getPoints() <= 3999) {
-            difficulty = Difficulty.INTERMEDIATE;
+        if (user.getPoints() > 999) {
+            rightAnswers = getAmountOfCorrectAnswersByDifficulty(projections, Difficulty.BASIC);
+        } else if (user.getPoints() > 3999) {
+            difficultyToVerify = Difficulty.INTERMEDIATE;
+            rightAnswers = getAmountOfCorrectAnswersByDifficulty(projections, Difficulty.INTERMEDIATE);
         }
 
-        int rightAnswers = getAmountOfCorrectAnswersByDifficulty(projections, difficulty);
-
+        Difficulty finalDifficultyToVerify = difficultyToVerify;
+        int finalRightAnswers = rightAnswers;
         return projections
                 .stream()
-                .map(lesson -> mapLesson(lesson, rightAnswers))
+                .map(lesson -> mapLesson(lesson, finalRightAnswers, finalDifficultyToVerify))
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +55,7 @@ public class LessonService {
                 .sum();
     }
 
-    private Lesson mapLesson(LessonProjection projection, int rightAnswers) {
+    private Lesson mapLesson(LessonProjection projection, int rightAnswers, Difficulty currentDifficulty) {
         Lesson lesson = new Lesson();
         lesson.setIdLesson(projection.getIdLesson());
 
@@ -65,11 +67,19 @@ public class LessonService {
 
         Status status = Status.INPROGRESS;
 
-        if (projection.getDifficulty().equals(Difficulty.INTERMEDIATE.getLabel())) {
-            status = rightAnswers >= 20 ? Status.INPROGRESS : Status.BLOCKED;
+        if (currentDifficulty.equals(Difficulty.BASIC)) {
+            if (projection.getDifficulty().equals(Difficulty.INTERMEDIATE.getLabel())) {
+                status = rightAnswers >= 20 ? Status.INPROGRESS : Status.BLOCKED;
 
-        } else if (projection.getDifficulty().equals(Difficulty.ADVANCED.getLabel())) {
-            status = rightAnswers >= 30 ? Status.INPROGRESS : Status.BLOCKED;
+            } else if (projection.getDifficulty().equals(Difficulty.ADVANCED.getLabel())) {
+                status = Status.BLOCKED;
+            }
+
+        } else if (
+                currentDifficulty.equals(Difficulty.INTERMEDIATE) &&
+                projection.getDifficulty().equals(Difficulty.ADVANCED.getLabel())
+        ) {
+                status = rightAnswers >= 30 ? Status.INPROGRESS : Status.BLOCKED;
         }
 
         lesson.setStatus(status);
