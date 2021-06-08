@@ -2,8 +2,11 @@ package com.tcc.helpinghand;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +55,12 @@ public class UnityPlayerFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.disableSubs();
+    }
+
+    @Override
     public void onDestroy() {
         mUnityPlayer.quit();
         super.onDestroy();
@@ -61,6 +70,7 @@ public class UnityPlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mUnityPlayer.pause();
+        this.disableSubs();
     }
 
     @Override
@@ -68,13 +78,18 @@ public class UnityPlayerFragment extends Fragment {
         super.onResume();
         mUnityPlayer.resume();
 
-        this.translate(disableSubs);
+        this.translate();
     }
 
-    public void translate(boolean disableSubs) {
-        if (disableSubs) {
-            UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
-        }
-        UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
+    public void disableSubs() {
+        UnityPlayer.UnitySendMessage("ScreenManager", "DisableSubtitles", "disable");
+    }
+
+    public void translate() {
+
+        new android.os.Handler(Looper.getMainLooper()).postDelayed(
+            () -> {
+                UnityPlayer.UnitySendMessage("PlayerManager", "translate", sign);
+            }, 500);
     }
 }

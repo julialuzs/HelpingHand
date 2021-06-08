@@ -96,7 +96,8 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
             loadUnityFragment(currentQuestion.getSign());
         } else {
             fragment.sign = currentQuestion.getSign();
-            fragment.translate(true);
+            fragment.disableSubs = true;
+            fragment.translate();
         }
 
         setButtonsOnScreen(currentQuestion);
@@ -189,7 +190,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
     public void setQuestionInfo(int questionNumber, String description) {
         tvDescription.setText(description);
-        String question = "Questão " + questionNumber + 1;
+        String question = "Questão " + (questionNumber + 1);
         tvQuestionNumber.setText(question);
     }
 
