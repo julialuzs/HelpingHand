@@ -14,11 +14,21 @@ import com.unity3d.player.UnityPlayer;
 
 public class UnityPlayerFragment extends Fragment {
 
+    public String sign;
+    public boolean disableSubs;
     protected UnityPlayer mUnityPlayer;
     FrameLayout frameLayoutForUnity;
 
-    public String sign;
-    public boolean disableSubs;
+    public static UnityPlayerFragment newInstance(
+            String signToTranslate, boolean disableSubs
+    ) {
+        UnityPlayerFragment fragment = new UnityPlayerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("sign", signToTranslate);
+        bundle.putBoolean("disableSubs", disableSubs);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,17 +49,6 @@ public class UnityPlayerFragment extends Fragment {
         mUnityPlayer.requestFocus();
         mUnityPlayer.windowFocusChanged(true);
         return view;
-    }
-
-    public static UnityPlayerFragment newInstance(
-            String signToTranslate, boolean disableSubs
-    ) {
-        UnityPlayerFragment fragment = new UnityPlayerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("sign", signToTranslate);
-        bundle.putBoolean("disableSubs", false);
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Override

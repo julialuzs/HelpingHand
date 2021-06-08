@@ -27,17 +27,17 @@ public class UserService {
     @Autowired
     private LevelRepository levelRepository;
 
-    public User signIn(User usuario) {
+    public User signIn(User user) {
 
-        validator.validate(usuario);
-        usuario.setInviteCode(usuario.generateInviteCode());
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        validator.validate(user);
+        user.setInviteCode(user.generateInviteCode());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Level level = new Level();
         level.setIdLevel(1);
-        usuario.setLevel(level);
+        user.setLevel(level);
 
-        return repository.save(usuario);
+        return repository.save(user);
     }
 
     public User findById(long id) {

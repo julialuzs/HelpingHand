@@ -124,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         User user = getUser();
         Call<LoginResponse> call = userService.signin(user);
 
-
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

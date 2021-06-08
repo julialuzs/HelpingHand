@@ -26,9 +26,12 @@ public class PublicUserController {
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public LoginResponse signIn(@RequestBody User user) {
+        String email = user.getEmail();
+        String password = user.getPassword();
+
         userService.signIn(user);
 
-        String token = authenticationService.authenticate(user.getEmail(), user.getPassword());
+        String token = authenticationService.authenticate(email, password);
 
         logService.registerLog(user);
 
@@ -36,6 +39,7 @@ public class PublicUserController {
     }
 
     @PostMapping("/login")
+    @ResponseStatus(HttpStatus.CREATED)
     public LoginResponse login(@RequestBody LoginRequest request) {
 
         String email = request.getEmail();
