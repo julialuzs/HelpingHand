@@ -26,11 +26,14 @@ public class PublicUserController {
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public LoginResponse signIn(@RequestBody User user) {
-        User newUser = userService.signIn(user);
+        String email = user.getEmail();
+        String password = user.getPassword();
 
-        String token = authenticationService.authenticate(newUser.getEmail(), newUser.getPassword());
+        userService.signIn(user);
 
-        logService.registerLog(newUser);
+        String token = authenticationService.authenticate(email, password);
+
+        logService.registerLog(user);
 
         return new LoginResponse(token);
     }

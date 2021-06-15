@@ -97,6 +97,11 @@ public class HomeFragment extends Fragment {
         this.loadLessons();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     private void initializeComponents() {
         RetrofitConfig config = new RetrofitConfig();
         this.lessonService = config.getLessonService();

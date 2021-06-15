@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="8dp"
-            android:text="Selos alcançados"
+            android:text="Selos conquistados"
             android:showDividers="none"
             android:textAlignment="center"
             android:textAllCaps="true"
@@ -92,9 +92,11 @@
             app:layout_alignSelf="center" />
 
         <ScrollView
+            android:id="@+id/sv_selos"
             app:layout_constraintTop_toBottomOf="@+id/tv_selos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="invisible"
             android:layout_marginBottom="30dp">
 
             <com.google.android.flexbox.FlexboxLayout

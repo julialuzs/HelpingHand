@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public UserService userService;
     public User user;
-
+    public ScrollView svAchievements;
     private TextView tvLogout;
     private TextView tvPoints;
     private TextView tvLevel;
@@ -71,16 +72,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
+                    if (user.getLevel().getDescription().equals("Iniciante")) {
+                        svAchievements.setVisibility(View.INVISIBLE);
+                    } else {
+                        svAchievements.setVisibility(View.VISIBLE);
+                    }
                     mtProfile.setTitle(user.getName());
                     tvLevel.setText("Nível " + user.getLevel().getDescription());
-                    tvPoints.setText(String.valueOf(user.getPoints()) + " pontos");
+                    tvPoints.setText(user.getPoints() + " pontos");
                     tvLogout.setOnClickListener(view -> logout());
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                t.printStackTrace();
             }
         });
     }
@@ -133,7 +139,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void initializeComponents() {
         View view = getView();
-         tvLogout = view.findViewById(R.id.tv_profile_logout);
+        tvLogout = view.findViewById(R.id.tv_profile_logout);
         tvPoints = view.findViewById(R.id.tv_profile_points);
         tvLevel = view.findViewById(R.id.tv_profile_level);
         mtProfile = view.findViewById(R.id.mt_profile);
@@ -141,6 +147,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnResearcher = view.findViewById(R.id.researcher);
         btnPupil = view.findViewById(R.id.pupil);
         btnButterfly = view.findViewById(R.id.butterfly);
+        svAchievements = view.findViewById(R.id.sv_selos);
         RetrofitConfig config = new RetrofitConfig();
         this.userService = config.getUserService();
 

@@ -66,7 +66,7 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
                 if (response.isSuccessful()) {
                     questions = response.body();
 
-                    if (questions.size() > 0) {
+                    if (questions != null && questions.size() > 0) {
                         currentQuestionIndex = 0;
                         loadCurrentQuestion();
                     }
@@ -123,7 +123,8 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
         fragment = new UnityPlayerFragment();
         fragment.setArguments(bundle);
 
-        transaction.add(R.id.fl_unity_fragment, fragment);
+        transaction.replace(R.id.fl_unity_fragment, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -208,8 +209,12 @@ public class QuestionActivity extends AppCompatActivity implements DialogInterfa
 
     @Override
     public void onBackPressed() {
+//        this.getFragmentManager().popBackStack();
+//        fragment.mUnityPlayer.quit();
+//        finish();
         Intent intent = new Intent(QuestionActivity.this, MainActivity.class);
         //to do - adicionar um dialog p confimar se o usuario quer voltar
         startActivity(intent);
+//        finish();
     }
 }

@@ -91,11 +91,9 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
             if (post.isLikedByMe()) {
                 post.setLikedByMe(false);
                 setDislikeButton(tvLike);
-                tvLike.setText("Descurtir");
             } else {
                 post.setLikedByMe(true);
                 setLikeButton(tvLike);
-                tvLike.setText("Curtir");
             }
 
             String token = TokenService.getToken(getContext());
@@ -119,11 +117,13 @@ public class FeedListAdapter extends ArrayAdapter<Post> {
     private void setLikeButton(TextView tvLike) {
         tvLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite, 0, 0, 0);
         setTextViewDrawableColor(tvLike, R.color.accent_green);
+        tvLike.setText("Descurtir");
     }
 
     private void setDislikeButton(TextView tvLike) {
         tvLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_favorite_border, 0, 0, 0);
         setTextViewDrawableColor(tvLike, R.color.design_default_color_on_secondary);
+        tvLike.setText("Curtir");
     }
 
     private void setTextViewDrawableColor(TextView textView, int color) {
