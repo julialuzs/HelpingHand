@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class LogService {
@@ -18,5 +19,12 @@ public class LogService {
         Log log = new Log(user, LocalDateTime.now());
 
         return repository.save(log);
+    }
+
+    public void removeLogByUserId(long userId) {
+        List<Log> logs = repository.findAllByUserIdUser(userId);
+        for (Log log : logs) {
+            repository.delete(log);
+        }
     }
 }

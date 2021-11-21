@@ -1,8 +1,10 @@
 package com.tcc.helpinghand.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Random;
 
 @Data
@@ -27,6 +29,11 @@ public class User {
     private boolean isDeaf;
 
     private long points;
+
+    private String state;
+
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private Date registrationDate;
 
     @Column(length = 10, nullable = false)
     private String inviteCode;
